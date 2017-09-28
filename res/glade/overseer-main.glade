@@ -11,11 +11,10 @@
     <property name="title" translatable="yes">MTG Card Lookup</property>
     <property name="modal">True</property>
     <property name="window_position">center-always</property>
-    <property name="default_width">550</property>
-    <property name="default_height">380</property>
+    <property name="default_width">750</property>
+    <property name="default_height">500</property>
     <property name="type_hint">dialog</property>
     <property name="skip_taskbar_hint">True</property>
-    <property name="decorated">False</property>
     <property name="has_resize_grip">True</property>
     <signal name="delete-event" handler="onDeleteWindow" swapped="no"/>
     <child>
@@ -38,7 +37,7 @@
                 <property name="can_focus">True</property>
                 <property name="placeholder_text" translatable="yes">Card Name</property>
                 <signal name="activate" handler="onSearch" swapped="no"/>
-                <signal name="key-release-event" handler="onKeyRelease" swapped="no"/>
+                <signal name="key-press-event" handler="onKeyRelease" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -71,9 +70,10 @@
           <placeholder/>
         </child>
         <child>
-          <object class="GtkScrolledWindow">
+          <object class="GtkScrolledWindow" id="scroll-window">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can_focus">False</property>
+            <property name="hscrollbar_policy">never</property>
             <property name="shadow_type">etched-in</property>
             <child>
               <object class="GtkViewport">
@@ -84,8 +84,8 @@
                   <object class="GtkListBox" id="card-listbox">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="selection_mode">none</property>
                     <property name="activate_on_single_click">False</property>
-                    <signal name="row-activated" handler="onRowActivated" swapped="no"/>
                   </object>
                 </child>
               </object>
