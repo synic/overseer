@@ -3,7 +3,7 @@
   "productName": "overseer",
   "version": "1.0.0",
   "description": "MTG Card Lookup Application",
-  "main": "src/index.js",
+  "main": "src/init.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -49,6 +49,7 @@
   "dependencies": {
     "electron-compile": "^6.4.2",
     "electron-squirrel-startup": "^1.0.0",
+    "handlebars": "^4.0.10",
     "mtgsdk": "^0.3.0"
   },
   "devDependencies": {

@@ -1,6 +1,8 @@
 import { app, BrowserWindow } from 'electron';
 
 const electron = require('electron');
+const ipc = require('electron').ipcMain;
+const mtg = require('mtgsdk');
 
 const WINDOW_HEIGHT = 600;
 const WINDOW_WIDTH = 800;
@@ -19,22 +21,21 @@ const createWindow = () => {
   const bounds = electron.screen.getPrimaryDisplay().bounds;
   const xCoord = bounds.x + ((bounds.width - WINDOW_WIDTH) / 2);
   const yCoord = bounds.y + ((bounds.height - WINDOW_HEIGHT) / 2);
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     parent: p,
     modal: true,
-    center: true,
     width: WINDOW_WIDTH,
     height: WINDOW_HEIGHT,
     x: xCoord,
     y: yCoord,
     alwaysOnTop: true,
-    minimizable: true,
+    minimizable: false,
     darkTheme: true,
     frame: false,
     title: 'Overseer',
     titleBarStyle: 'hidden',
-    type: 'desktop',
   });
 
   // and load the index.html of the app.
@@ -56,6 +57,12 @@ const createWindow = () => {
     p = null;
   });
 };
+
+ipc.on('search-begin', (event, keywords) => {
+  mtg.card.where({ name: keywords }).then((cards) => {
+    ipc.send('search-complete', cards);
+  });
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -79,4 +86,4 @@ app.on('activate', () => {
   }
 });
 
-// vim: sts=4,ts=4,sw=2
+// vim: set sts=2 ts=2 sw=2 :
