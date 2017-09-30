@@ -13,20 +13,37 @@ handlebars.registerHelper('nl2br', (text) => {
   return new handlebars.SafeString(nl2br);
 });
 
+function setLoading(loading) {
+  const img = document.getElementById('loading-image');
+  if (loading) {
+    img.style.display = 'block';
+  } else {
+    img.style.display = 'none';
+  }
+}
+
+function getManaCost(card) {
+}
+
 function performSearch(keywords) {
   const cardList = document.getElementById('cardlist-div');
   const search = document.getElementById('search');
   cardList.innerHTML = '';
-
+  setLoading(true);
 
   mtg.card.where({ name: keywords }).then((cards) => {
+    setLoading(false);
     console.log(`Found ${cards.length} cards...`);
     let html = '';
 
     cards.forEach((c, i) => {
       console.log(c);
       if (c.imageUrl) {
-        html += rowTemplate({ card: c, index: i });
+        html += rowTemplate({
+          card: c,
+          index: i,
+          manaCost: getManaCost(c.manaCost),
+        });
       }
     });
 

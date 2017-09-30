@@ -8,12 +8,13 @@
   </head>
   <body>
     <div class="window">
-      <header class="search">
+      <header>
         <input type="text" id="search" />
+        <img src="images/loading.gif" id="loading-image">
       </header>
 
       <div id="cardlist-div"></div>
-      <footer class="footer"></footer>
+      <footer></footer>
     </div>
 
     <script id="card-row-template" type="text/x-handlebars-template">
@@ -32,7 +33,7 @@
               {{ card.manaCost }}
             </div>
           </div>
-          <hr>
+          <hr class="card-name-separator">
           <div class="card-text">
             {{nl2br card.text }}
           </div>

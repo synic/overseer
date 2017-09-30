@@ -32,6 +32,8 @@ const createWindow = () => {
     alwaysOnTop: true,
     minimizable: false,
     darkTheme: true,
+    show: false,
+    backgroundColor: '#0f0f0f',
     frame: false,
     title: 'Overseer',
     titleBarStyle: 'hidden',
@@ -45,6 +47,11 @@ const createWindow = () => {
 
   // set always on top, floating
   mainWindow.setAlwaysOnTop(true, 'floating');
+
+  // only show the window when it's rendered everything
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+  });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
