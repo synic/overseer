@@ -3,23 +3,42 @@
   <head>
     <meta charset="utf-8">
     <title>MTG Card Lookup</title>
-    <link href="style.css" rel="stylesheet" />
-    <script language="javascript">
-    </script>
+    <link href="css/style.css" rel="stylesheet" />
+    <script src="js/app.js"></script>
   </head>
   <body>
-    <div class="search">
-      <input type="text" id="search" />
-    </div>
+    <div class="window">
+      <header class="search">
+        <input type="text" id="search" />
+      </header>
 
-    <script src="app.js"></script>
+      <div id="cardlist-div"></div>
+      <footer class="footer"></footer>
+    </div>
 
     <script id="card-row-template" type="text/x-handlebars-template">
       <div class="card-row">
         <div class="card-image">
-          <img src="images/example_card.jpg">
+          <img id="card-image-{{ index }}" src="images/example_card.jpg"
+            onerror='this.src="images/example_card.jpg";'
+            width="150" height="209">
         </div>
         <div class="card-information">
+          <div class="card-header">
+            <div class="card-name">
+              {{ card.name }}
+            </div>
+            <div class="card-mana-cost">
+              {{ card.manaCost }}
+            </div>
+          </div>
+          <hr>
+          <div class="card-text">
+            {{nl2br card.text }}
+          </div>
+          <div class="card-flavor">
+            {{nl2br card.flavor }}
+          </div>
         </div>
       </div>
     </script>

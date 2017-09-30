@@ -2,7 +2,6 @@ import { app, BrowserWindow } from 'electron';
 
 const electron = require('electron');
 const ipc = require('electron').ipcMain;
-const mtg = require('mtgsdk');
 
 const WINDOW_HEIGHT = 600;
 const WINDOW_WIDTH = 800;
@@ -39,7 +38,7 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
+  mainWindow.loadURL(`file://${__dirname}/../index.html`);
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
@@ -58,12 +57,6 @@ const createWindow = () => {
   });
 };
 
-ipc.on('search-begin', (event, keywords) => {
-  mtg.card.where({ name: keywords }).then((cards) => {
-    ipc.send('search-complete', cards);
-  });
-});
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -71,11 +64,7 @@ app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  app.quit();
 });
 
 app.on('activate', () => {
@@ -84,6 +73,12 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+// IPC Handlers
+
+ipc.on('application-exit', () => {
+  app.quit();
 });
 
 // vim: set sts=2 ts=2 sw=2 :

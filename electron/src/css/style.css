@@ -1,0 +1,86 @@
+html, body {
+  height: 100%
+}
+
+body {
+  background: #cccccc;
+  margin: 15px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.window {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+input#search {
+  width: 100%;
+  display: block;
+}
+
+header.search {
+  display: flex;
+  margin-bottom: 15px;
+  flex-shrink: 0;
+}
+
+.footer {
+  height: 15px;
+  background-color: red;
+  flex-shrink: 0;
+}
+
+#cardlist-div {
+  overflow-y: scroll;
+  flex-grow: 1;
+  border: 1px solid #999;
+  background-color: #fff;
+  padding: 5px;
+  margin-bottom: 15px;
+}
+
+#cardlist-div::-webkit-scrollbar {
+  width: 5px !important;
+}
+
+.card-row {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+
+.card-text {
+}
+
+.card-flavor {
+  font-style: italic;
+  margin-top: 15px;
+}
+
+.card-image {
+  flex-shrink: 0
+  margin-right: 15px;
+}
+
+.card-header {
+  display: flex;
+}
+
+.card-name {
+  font-weight: bold;
+  flex-grow: 1;
+}
+
+.card-mana-cost {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.card-information {
+  flex-grow: 1;
+  padding-left: 15px;
+}
+
+/* vim: set ts=2 sts=2 sw=2 : */
