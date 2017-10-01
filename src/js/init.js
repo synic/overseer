@@ -1,15 +1,8 @@
-import {
-  app,
-  BrowserWindow,
-  globalShortcut,
-  Menu,
-  Tray,
-} from 'electron';
-
+import { app, BrowserWindow, globalShortcut, Menu, Tray } from 'electron';
 import { addMenu } from './mainmenu.js';
 
-const electron = require('electron');
 const ipc = require('electron').ipcMain;
+const windowStateKeeper = require('electron-window-state');
 
 const WINDOW_HEIGHT = 600;
 const WINDOW_WIDTH = 800;
@@ -25,19 +18,23 @@ let mainWindow = null;
 let tray = null;
 
 const createWindow = () => {
-  let p = new BrowserWindow({ show: false, center: true });
-  const bounds = electron.screen.getPrimaryDisplay().bounds;
-  const xCoord = bounds.x + ((bounds.width - WINDOW_WIDTH) / 2);
-  const yCoord = bounds.y + ((bounds.height - WINDOW_HEIGHT) / 2);
+  // for a floating modal window, we need to create a parent window, even
+  // though we aren't planning on displaying it.
+  let p = new BrowserWindow({ show: false });
+
+  const mainWindowState = windowStateKeeper({
+    defaultWidth: WINDOW_WIDTH,
+    defaultHeight: WINDOW_HEIGHT,
+  });
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
     parent: p,
     modal: true,
-    width: WINDOW_WIDTH,
-    height: WINDOW_HEIGHT,
-    x: xCoord,
-    y: yCoord,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
     alwaysOnTop: true,
     minimizable: false,
     darkTheme: true,
@@ -55,10 +52,7 @@ const createWindow = () => {
   // set always on top, floating
   mainWindow.setAlwaysOnTop(true, 'floating');
 
-  // only show the window when it's rendered everything
-  // mainWindow.once('ready-to-show', () => {
-    // mainWindow.show();
-  // });
+  mainWindowState.manage(mainWindow);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

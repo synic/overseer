@@ -26,9 +26,11 @@ const template = [
   },
 ];
 
-export default template;
+export default {};
 
 export function addMenu() {
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
 }
+
+// vim: set sts=2 ts=2 sw=2 :

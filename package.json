@@ -49,6 +49,7 @@
   "dependencies": {
     "electron-compile": "^6.4.2",
     "electron-squirrel-startup": "^1.0.0",
+    "electron-window-state": "^4.1.1",
     "handlebars": "^4.0.10",
     "mtgsdk": "^0.3.0"
   },
