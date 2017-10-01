@@ -20,6 +20,7 @@
     <script id="card-row-template" type="text/x-handlebars-template">
       <div class="card-row">
         <div class="card-image">
+          <span class="align-helper"></span>
           <img id="card-image-{{ index }}" src="images/example_card.jpg"
             onerror='this.src="images/example_card.jpg";'
             width="150" height="209">
@@ -30,15 +31,15 @@
               {{ card.name }}
             </div>
             <div class="card-mana-cost">
-              {{ card.manaCost }}
+              {{ mtg card.manaCost }}
             </div>
           </div>
           <hr class="card-name-separator">
           <div class="card-text">
-            {{nl2br card.text }}
+            {{ mtg card.text }}
           </div>
           <div class="card-flavor">
-            {{nl2br card.flavor }}
+            {{ mtg card.flavor }}
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Tray } from 'electron';
 
 const electron = require('electron');
 const ipc = require('electron').ipcMain;
@@ -13,7 +13,8 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+let mainWindow = null;
+let tray = null;
 
 const createWindow = () => {
   let p = new BrowserWindow({ show: false, center: true });
@@ -43,14 +44,14 @@ const createWindow = () => {
   mainWindow.loadURL(`file://${__dirname}/../index.html`);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   // set always on top, floating
   mainWindow.setAlwaysOnTop(true, 'floating');
 
   // only show the window when it's rendered everything
   mainWindow.once('ready-to-show', () => {
-    mainWindow.show();
+    // mainWindow.show();
   });
 
   // Emitted when the window is closed.
@@ -64,10 +65,36 @@ const createWindow = () => {
   });
 };
 
+const shouldQuit = app.makeSingleInstance(() => {
+  // Someone tried to run a second instance, we should focus our window
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.show();
+    mainWindow.focus();
+  }
+  return true;
+});
+
+if (shouldQuit) {
+  app.quit();
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', () => {
+  createWindow();
+  const imgloc = `${__dirname}/../images/icon.png`;
+  tray = new Tray(imgloc);
+  tray.setToolTip('Overseer');
+  tray.on('click', () => {
+    if (mainWindow.isVisible()) {
+      mainWindow.hide();
+    } else {
+      mainWindow.show();
+    }
+  });
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -86,6 +113,10 @@ app.on('activate', () => {
 
 ipc.on('application-exit', () => {
   app.quit();
+});
+
+ipc.on('mainwindow-hide', () => {
+  mainWindow.hide();
 });
 
 // vim: set sts=2 ts=2 sw=2 :

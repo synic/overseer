@@ -2,15 +2,19 @@ const ipc = require('electron').ipcRenderer;
 const mtg = require('mtgsdk');
 const handlebars = require('handlebars');
 
-let rowTemplate;
+let rowTemplate = null;
 
-// {{#nl2br}} replace returns with <br>
-handlebars.registerHelper('nl2br', (text) => {
+handlebars.registerHelper('mtg', (text) => {
   if (!text) return '';
-
-  const nl2br = text.replace(
+  let t = text.replace(
       /([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br>$2');
-  return new handlebars.SafeString(nl2br);
+
+  t = t.replace(/\{([0-9A-Z]\/?[0-9A-Z]?)\}/g, (all, g1) => {
+    const imageName = g1.toLowerCase().replace('/', '');
+    return `<img src="images/mana-${imageName}.jpg" width="14" height="14">`;
+  });
+
+  return new handlebars.SafeString(t);
 });
 
 function setLoading(loading) {
@@ -20,9 +24,6 @@ function setLoading(loading) {
   } else {
     img.style.display = 'none';
   }
-}
-
-function getManaCost(card) {
 }
 
 function performSearch(keywords) {
@@ -42,7 +43,6 @@ function performSearch(keywords) {
         html += rowTemplate({
           card: c,
           index: i,
-          manaCost: getManaCost(c.manaCost),
         });
       }
     });
@@ -61,18 +61,22 @@ function performSearch(keywords) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('search').focus();
+  const search = document.getElementById('search');
+  search.focus();
+
+  window.addEventListener('click', () => {
+    search.focus();
+    search.select();
+  });
 
   rowTemplate = handlebars.compile(
     document.getElementById('card-row-template').innerHTML);
-
-  const search = document.getElementById('search');
 
   search.addEventListener('keydown', (e) => {
     if (e.which === 13) {
       performSearch(search.value);
     } else if (e.which === 27) {
-      ipc.send('application-exit');
+      ipc.send('mainwindow-hide');
     }
   });
 });
