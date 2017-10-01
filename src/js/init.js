@@ -34,7 +34,7 @@ const createWindow = () => {
     minimizable: false,
     darkTheme: true,
     show: false,
-    backgroundColor: '#0f0f0f',
+    backgroundColor: '#666',
     frame: false,
     title: 'Overseer',
     titleBarStyle: 'hidden',
@@ -51,7 +51,7 @@ const createWindow = () => {
 
   // only show the window when it's rendered everything
   mainWindow.once('ready-to-show', () => {
-    // mainWindow.show();
+    mainWindow.show();
   });
 
   // Emitted when the window is closed.

@@ -1,7 +1,7 @@
 html, body {
   height: 100%;
   width: 100%;
-  background-color: #0f0f0f;
+  background-color: #202020;
   box-sizing: border-box;
 }
 
@@ -56,7 +56,7 @@ textarea, input, button { outline: none; }
 }
 
 input#search {
-  background-color: #202020;
+  background-color: #404040;
   border: none;
   border-radius: 4px;
   float: left;
@@ -75,7 +75,7 @@ input#search {
 #cardlist-div {
   overflow-y: scroll;
   flex: 1 1 auto;
-  background-color: #202020;
+  background-color: #404040;
   border: none;
   font-size: 14px;
   font-weight: 400;
@@ -94,7 +94,7 @@ input#search {
 
 .card-row {
   display: flex;
-  background-color: #888;
+  background-color: #a0a0a0;
   color: #000;
   flex-direction: row;
   padding: 6px;
