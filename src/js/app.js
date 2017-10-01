@@ -35,28 +35,21 @@ function performSearch(keywords) {
   mtg.card.where({ name: keywords }).then((cards) => {
     setLoading(false);
     console.log(`Found ${cards.length} cards...`);
-    let html = '';
 
     cards.forEach((c, i) => {
       console.log(c);
       if (c.imageUrl) {
-        html += rowTemplate({
+        cardList.innerHTML += rowTemplate({
           card: c,
           index: i,
         });
-      }
-    });
-
-    cardList.innerHTML = html;
-    search.focus();
-    search.select();
-
-    cards.forEach((c, i) => {
-      if (c.imageUrl) {
         const img = document.getElementById(`card-image-${i}`);
         img.src = c.imageUrl;
       }
     });
+
+    search.focus();
+    search.select();
   });
 }
 

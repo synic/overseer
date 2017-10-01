@@ -1,8 +1,9 @@
 html, body {
   height: 100%;
   width: 100%;
-  background-color: #202020;
+  background-color: #2f3540;
   box-sizing: border-box;
+  font-family: 'Raleway', sans-serif;
 }
 
 body {
@@ -23,12 +24,6 @@ header {
 footer {
   height: 15px;
   flex: 0 0 15px;
-}
-
-hr.card-name-separator {
-  border: none;
-  height: 1px;
-  background-color: #ccc;
 }
 
 .window {
@@ -56,7 +51,7 @@ textarea, input, button { outline: none; }
 }
 
 input#search {
-  background-color: #404040;
+  background-color: #666a73;
   border: none;
   border-radius: 4px;
   float: left;
@@ -73,9 +68,9 @@ input#search {
 }
 
 #cardlist-div {
+  background-color: #666a73;
   overflow-y: scroll;
   flex: 1 1 auto;
-  background-color: #404040;
   border: none;
   font-size: 14px;
   font-weight: 400;
@@ -93,8 +88,8 @@ input#search {
 }
 
 .card-row {
+  background-color: #f2ede4;
   display: flex;
-  background-color: #a0a0a0;
   color: #000;
   flex-direction: row;
   padding: 6px;
@@ -105,11 +100,13 @@ input#search {
 }
 
 .card-text {
+  flex: 1 1 auto;
 }
 
 .card-flavor {
   font-style: italic;
   margin-top: 15px;
+  flex: 0 0 auto;
 }
 
 .align-helper {
@@ -121,20 +118,31 @@ input#search {
 .card-image {
   vertical-align: middle;
   flex: 0 0 auto;
+  overflow: hidden;
   margin-left: -4px;
   border-radius: 4px;
+  padding: 6px;
 }
 
-img {
+img.card-image {
   vertical-align: middle;
+}
+
+hr.card-name-separator {
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+  flex: 0 0 auto;
+  width: 100%;
 }
 
 .card-header {
   display: flex;
+  flex: 0 0 auto;
 }
 
 .card-name {
-  font-weight: bold;
+  font-size: 20px;
   flex: 1 0 auto;
   color: #000;
 }
@@ -146,8 +154,14 @@ img {
 
 .card-information {
   flex: 1 1 auto;
-  padding-left: 15px;
-  padding-top: 6px;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 15px;
+  padding-bottom: 25px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+
 }
 
 /* vim: set ts=2 sts=2 sw=2 : */

@@ -1,4 +1,12 @@
-import { app, BrowserWindow, Tray } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  globalShortcut,
+  Menu,
+  Tray,
+} from 'electron';
+
+import { addMenu } from './mainmenu.js';
 
 const electron = require('electron');
 const ipc = require('electron').ipcMain;
@@ -34,25 +42,23 @@ const createWindow = () => {
     minimizable: false,
     darkTheme: true,
     show: false,
-    backgroundColor: '#666',
+    backgroundColor: '#666a73',
     frame: false,
     title: 'Overseer',
     titleBarStyle: 'hidden',
+    icon: `${__dirname}/../icon.png`,
   });
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/../index.html`);
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
-
   // set always on top, floating
   mainWindow.setAlwaysOnTop(true, 'floating');
 
   // only show the window when it's rendered everything
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.show();
-  });
+  // mainWindow.once('ready-to-show', () => {
+    // mainWindow.show();
+  // });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
@@ -83,9 +89,18 @@ if (shouldQuit) {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
+  // create the main window
   createWindow();
+
+  // create the system tray icon
   const imgloc = `${__dirname}/../images/icon.png`;
   tray = new Tray(imgloc);
+  const contextMenu = Menu.buildFromTemplate([{
+    label: 'Quit',
+    click: () => { app.quit(); },
+  }]);
+
+  tray.setContextMenu(contextMenu);
   tray.setToolTip('Overseer');
   tray.on('click', () => {
     if (mainWindow.isVisible()) {
@@ -94,6 +109,20 @@ app.on('ready', () => {
       mainWindow.show();
     }
   });
+
+  // global keyboard shortcuts
+  globalShortcut.register('Control+Alt+M', () => {
+    if (mainWindow === null) {
+      createWindow();
+    }
+
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.show();
+    mainWindow.focus();
+  });
+
+  // include system menu
+  addMenu();
 });
 
 // Quit when all windows are closed.
