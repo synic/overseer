@@ -86,7 +86,10 @@ if (shouldQuit) {
 app.on('ready', () => {
   // create the main window
   createWindow();
-  app.dock.hide(); // hide os x dock icon
+
+  if (process.platform === 'darwin') {
+    app.dock.hide(); // hide os x dock icon
+  }
 
   // create the system tray icon
   tray = new Tray(`${__dirname}/images/trayicon.png`);
@@ -126,8 +129,6 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     createWindow();
   }
