@@ -19,6 +19,7 @@
       <footer></footer>
     </div>
 
+    <!-- card row template -->
     <script id="card-row-template" type="text/x-handlebars-template">
       <div class="card-row">
         <div class="card-image">
@@ -39,7 +40,9 @@
           <hr class="card-name-separator">
           <div class="card-type">
             {{card.type}}
-            {{#if card.power}}, {{card.power}}/{{card.toughness}}{{/if}}
+            {{#if card.power}}
+              , {{card.power}}/{{card.toughness}}
+            {{/if}}
           </div>
           <div class="card-text">
             {{mtg card.text '14'}}
@@ -56,4 +59,4 @@
   </body>
 </html>
 
-<!-- vim: set ts=2 sts=2 sw=2 : -->
+<!-- vim: set ts=2 sts=2 sw=2 ft=mustache : -->
