@@ -11,8 +11,8 @@ handlebars.registerHelper('mtg', (text, wh) => {
 
   t = t.replace(/\{([0-9A-Z]\/?[0-9A-Z]?)\}/g, (all, g1) => {
     const imageName = g1.toLowerCase().replace('/', '');
-    return `<img src="images/mana-${imageName}.jpg"
-      width="${wh}" height="${wh}">`;
+    return `<img src="images/mana/mana-${imageName}.svg"
+      width="${wh}" height="${wh}" class="mana-image">`;
   });
 
   return new handlebars.SafeString(t);

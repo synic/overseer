@@ -126,6 +126,12 @@ img.card-image {
   vertical-align: middle;
 }
 
+.mana-image {
+  border: 1px solid #666;
+  border-radius: 100%;
+  box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 1);
+}
+
 hr.card-name-separator {
   border: none;
   height: 1px;
