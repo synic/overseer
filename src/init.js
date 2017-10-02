@@ -80,6 +80,23 @@ app.on('ready', () => {
   // create the main window
   createWindow();
 
+  // create the system tray icon
+  tray = new Tray(`${__dirname}/../assets/img/trayicon.png`);
+  const contextMenu = Menu.buildFromTemplate([{
+    label: 'Quit',
+    click: () => { app.quit(); },
+  }]);
+
+  tray.setContextMenu(contextMenu);
+  tray.setToolTip('Overseer');
+  tray.on('click', () => {
+    if (mainWindow.isVisible()) {
+      mainWindow.hide();
+    } else {
+      mainWindow.show();
+    }
+  });
+
   // global keyboard shortcuts
   globalShortcut.register('Control+Alt+M', () => {
     if (mainWindow === null) {
