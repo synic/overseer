@@ -4,14 +4,15 @@ const handlebars = require('handlebars');
 
 let rowTemplate = null;
 
-handlebars.registerHelper('mtg', (text) => {
+handlebars.registerHelper('mtg', (text, wh) => {
   if (!text) return '';
   let t = text.replace(
       /([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br>$2');
 
   t = t.replace(/\{([0-9A-Z]\/?[0-9A-Z]?)\}/g, (all, g1) => {
     const imageName = g1.toLowerCase().replace('/', '');
-    return `<img src="images/mana-${imageName}.jpg" width="14" height="14">`;
+    return `<img src="images/mana-${imageName}.jpg"
+      width="${wh}" height="${wh}">`;
   });
 
   return new handlebars.SafeString(t);

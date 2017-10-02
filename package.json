@@ -1,9 +1,9 @@
 {
   "name": "overseer",
-  "productName": "overseer",
+  "productName": "Overseer",
   "version": "1.0.0",
-  "description": "MTG Card Lookup Application",
-  "main": "src/js/init.js",
+  "description": "MTG Card Search",
+  "main": "src/init.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",

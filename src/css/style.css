@@ -139,6 +139,16 @@ hr.card-name-separator {
   flex: 0 0 auto;
 }
 
+.card-type {
+  flex: 0 0 auto;
+  margin-bottom: 15px;
+}
+
+.card-extra {
+  flex: 0 0 auto;
+  margin-top: 15px;
+}
+
 .card-name {
   font-size: 20px;
   flex: 1 0 auto;

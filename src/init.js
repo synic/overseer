@@ -1,5 +1,5 @@
 import { app, BrowserWindow, globalShortcut, Menu, Tray } from 'electron';
-import { addMenu } from './mainmenu.js';
+import { addMenu } from './js/mainmenu.js';
 
 const ipc = require('electron').ipcMain;
 const windowStateKeeper = require('electron-window-state');
@@ -20,7 +20,7 @@ let tray = null;
 const createWindow = () => {
   // for a floating modal window, we need to create a parent window, even
   // though we aren't planning on displaying it.
-  let p = new BrowserWindow({ show: false });
+  let p = new BrowserWindow({ show: false, center: true });
 
   const mainWindowState = windowStateKeeper({
     defaultWidth: WINDOW_WIDTH,
@@ -40,6 +40,7 @@ const createWindow = () => {
     darkTheme: true,
     show: false,
     backgroundColor: '#666a73',
+    skipTaskbar: true,
     frame: false,
     title: 'Overseer',
     titleBarStyle: 'hidden',
@@ -47,7 +48,7 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/../index.html`);
+  mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // set always on top, floating
   mainWindow.setAlwaysOnTop(true, 'floating');
@@ -85,10 +86,10 @@ if (shouldQuit) {
 app.on('ready', () => {
   // create the main window
   createWindow();
+  app.dock.hide(); // hide os x dock icon
 
   // create the system tray icon
-  const imgloc = `${__dirname}/../images/icon.png`;
-  tray = new Tray(imgloc);
+  tray = new Tray(`${__dirname}/images/trayicon.png`);
   const contextMenu = Menu.buildFromTemplate([{
     label: 'Quit',
     click: () => { app.quit(); },
