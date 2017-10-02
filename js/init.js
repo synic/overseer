@@ -20,7 +20,7 @@ let tray = null;
 const createWindow = () => {
   // for a floating modal window, we need to create a parent window, even
   // though we aren't planning on displaying it.
-  let p = new BrowserWindow({ show: false });
+  let p = new BrowserWindow({ show: false, center: true });
 
   const mainWindowState = windowStateKeeper({
     defaultWidth: WINDOW_WIDTH,
@@ -40,6 +40,7 @@ const createWindow = () => {
     darkTheme: true,
     show: false,
     backgroundColor: '#666a73',
+    'skip-taskbar': true,
     frame: false,
     title: 'Overseer',
     titleBarStyle: 'hidden',
@@ -87,8 +88,7 @@ app.on('ready', () => {
   createWindow();
 
   // create the system tray icon
-  const imgloc = `${__dirname}/../images/icon.png`;
-  tray = new Tray(imgloc);
+  tray = new Tray(`${__dirname}/../images/trayicon.png`);
   const contextMenu = Menu.buildFromTemplate([{
     label: 'Quit',
     click: () => { app.quit(); },
