@@ -6,7 +6,7 @@
   "main": "src/init.js",
   "scripts": {
     "start": "electron-forge start",
-    "package": "electron-forge package --extend-info=assets/mac/info.plist",
+    "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint src --color"
@@ -29,7 +29,9 @@
         ]
       },
       "electronPackagerConfig": {
-        "packageManager": "yarn"
+        "packageManager": "yarn",
+        "icon": "assets/img/icon",
+        "extendInfo": "assets/mac/info.plist"
       },
       "electronWinstallerConfig": {
         "name": "overseer"

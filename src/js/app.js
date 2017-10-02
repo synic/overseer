@@ -68,7 +68,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   search.addEventListener('keydown', (e) => {
     if (e.which === 13) {
-      performSearch(search.value);
+      if (search.value === ':debug:') {
+        ipc.send('mainwindow-debug');
+      } else if (search.value === ':exit:') {
+        ipc.send('application-exit');
+      } else {
+        performSearch(search.value);
+      }
     } else if (e.which === 27) {
       ipc.send('mainwindow-hide');
     }

@@ -1,5 +1,4 @@
 import { app, BrowserWindow, globalShortcut, Menu, Tray } from 'electron';
-import { addMenu } from './js/mainmenu.js';
 
 const ipc = require('electron').ipcMain;
 const windowStateKeeper = require('electron-window-state');
@@ -18,16 +17,6 @@ let mainWindow = null;
 let tray = null;
 
 const createWindow = () => {
-  // for a floating modal window, we need to create a parent window, even
-  // though we aren't planning on displaying it.
-  let p = null;
-  let modal = false;
-
-  if(process.platform === 'linux') {
-    p = new BrowserWindow({ show: false });
-    modal = true;
-  }
-
   const mainWindowState = windowStateKeeper({
     defaultWidth: WINDOW_WIDTH,
     defaultHeight: WINDOW_HEIGHT,
@@ -35,8 +24,8 @@ const createWindow = () => {
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    parent: p,
-    modal: modal,
+    parent: new BrowserWindow({ show: false }),
+    modal: true,
     width: mainWindowState.width,
     height: mainWindowState.height,
     x: mainWindowState.x,
@@ -46,11 +35,11 @@ const createWindow = () => {
     darkTheme: true,
     show: false,
     backgroundColor: '#666a73',
-    skipTaskbar: true,
-    frame: false,
+    skipTaskbar: process.platform !== 'darwin',
+    frame: process.platform === 'darwin',
     title: 'Overseer',
     titleBarStyle: 'hidden',
-    icon: `${__dirname}/../icon.png`,
+    icon: `${__dirname}/../assets/img/icon.png`,
   });
 
   // and load the index.html of the app.
@@ -63,11 +52,10 @@ const createWindow = () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null;
-    if (p) {
-      p.close();
-      p = null;
+    if (mainWindow.parent) {
+      mainWindow.parent.close();
     }
+    mainWindow = null;
   });
 };
 
@@ -92,27 +80,6 @@ app.on('ready', () => {
   // create the main window
   createWindow();
 
-  if (process.platform === 'darwin') {
-    app.dock.hide(); // hide os x dock icon
-  }
-
-  // create the system tray icon
-  tray = new Tray(`${__dirname}/images/trayicon.png`);
-  const contextMenu = Menu.buildFromTemplate([{
-    label: 'Quit',
-    click: () => { app.quit(); },
-  }]);
-
-  tray.setContextMenu(contextMenu);
-  tray.setToolTip('Overseer');
-  tray.on('click', () => {
-    if (mainWindow.isVisible()) {
-      mainWindow.hide();
-    } else {
-      mainWindow.show();
-    }
-  });
-
   // global keyboard shortcuts
   globalShortcut.register('Control+Alt+M', () => {
     if (mainWindow === null) {
@@ -123,9 +90,6 @@ app.on('ready', () => {
     mainWindow.show();
     mainWindow.focus();
   });
-
-  // include system menu
-  addMenu();
 });
 
 // Quit when all windows are closed.
@@ -147,6 +111,10 @@ ipc.on('application-exit', () => {
 
 ipc.on('mainwindow-hide', () => {
   mainWindow.hide();
+});
+
+ipc.on('mainwindow-debug', () => {
+  mainWindow.webContents.openDevTools();
 });
 
 // vim: set sts=2 ts=2 sw=2 :
