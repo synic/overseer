@@ -20,7 +20,13 @@ let tray = null;
 const createWindow = () => {
   // for a floating modal window, we need to create a parent window, even
   // though we aren't planning on displaying it.
-  let p = new BrowserWindow({ show: false, center: true });
+  let p = null;
+  let modal = false;
+
+  if(process.platform === 'linux') {
+    p = new BrowserWindow({ show: false });
+    modal = true;
+  }
 
   const mainWindowState = windowStateKeeper({
     defaultWidth: WINDOW_WIDTH,
@@ -30,7 +36,7 @@ const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     parent: p,
-    modal: true,
+    modal: modal,
     width: mainWindowState.width,
     height: mainWindowState.height,
     x: mainWindowState.x,
@@ -50,9 +56,6 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-  // set always on top, floating
-  mainWindow.setAlwaysOnTop(true, 'floating');
-
   mainWindowState.manage(mainWindow);
 
   // Emitted when the window is closed.
@@ -61,8 +64,10 @@ const createWindow = () => {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
-    p.close();
-    p = null;
+    if (p) {
+      p.close();
+      p = null;
+    }
   });
 };
 
