@@ -23,25 +23,32 @@
       <div class="card-row">
         <div class="card-image">
           <span class="align-helper"></span>
-          <img id="card-image-{{ index }}" src="images/example_card.jpg"
+          <img id="card-image-{{index}}" src="images/example_card.jpg"
             onerror='this.src="images/example_card.jpg";'
-            width="150" height="209">
+            width="200" height="279">
         </div>
         <div class="card-information">
           <div class="card-header">
             <div class="card-name">
-              {{ card.name }}
+              {{card.name}}
             </div>
             <div class="card-mana-cost">
-              {{ mtg card.manaCost }}
+              {{mtg card.manaCost '20'}}
             </div>
           </div>
           <hr class="card-name-separator">
+          <div class="card-type">
+            {{card.type}}
+            {{#if card.power}}, {{card.power}}/{{card.toughness}}{{/if}}
+          </div>
           <div class="card-text">
-            {{ mtg card.text }}
+            {{mtg card.text '14'}}
           </div>
           <div class="card-flavor">
-            {{ mtg card.flavor }}
+            {{mtg card.flavor '14'}}
+          </div>
+          <div class="card-extra">
+            {{card.setName}} ({{card.set}}), {{card.rarity}}
           </div>
         </div>
       </div>

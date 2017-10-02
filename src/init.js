@@ -1,5 +1,5 @@
 import { app, BrowserWindow, globalShortcut, Menu, Tray } from 'electron';
-import { addMenu } from './mainmenu.js';
+import { addMenu } from './js/mainmenu.js';
 
 const ipc = require('electron').ipcMain;
 const windowStateKeeper = require('electron-window-state');
@@ -40,7 +40,7 @@ const createWindow = () => {
     darkTheme: true,
     show: false,
     backgroundColor: '#666a73',
-    'skip-taskbar': true,
+    skipTaskbar: true,
     frame: false,
     title: 'Overseer',
     titleBarStyle: 'hidden',
@@ -48,7 +48,7 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/../index.html`);
+  mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // set always on top, floating
   mainWindow.setAlwaysOnTop(true, 'floating');
@@ -88,7 +88,7 @@ app.on('ready', () => {
   createWindow();
 
   // create the system tray icon
-  tray = new Tray(`${__dirname}/../images/trayicon.png`);
+  tray = new Tray(`${__dirname}/images/trayicon.png`);
   const contextMenu = Menu.buildFromTemplate([{
     label: 'Quit',
     click: () => { app.quit(); },
