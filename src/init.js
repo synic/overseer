@@ -86,6 +86,7 @@ if (shouldQuit) {
 app.on('ready', () => {
   // create the main window
   createWindow();
+  app.dock.hide(); // hide os x dock icon
 
   // create the system tray icon
   tray = new Tray(`${__dirname}/images/trayicon.png`);
