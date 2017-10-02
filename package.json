@@ -6,7 +6,7 @@
   "main": "src/init.js",
   "scripts": {
     "start": "electron-forge start",
-    "package": "electron-forge package",
+    "package": "electron-forge package --extend-info=assets/mac/info.plist",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint src --color"
