@@ -1,7 +1,12 @@
+/*
+    Color scheme from:
+    https://color.adobe.com/Das-Boot-color-theme-189112/
+*/
+
 html, body {
   height: 100%;
   width: 100%;
-  background-color: #2f3540;
+  background-color: #666a73;
   box-sizing: border-box;
   font-family: 'Raleway', sans-serif;
 }
@@ -45,17 +50,17 @@ footer {
 textarea, input, button { outline: none; }
 
 ::selection {
-  background-color: #fff;
+  background-color: #aaa;
   color: #000;
 }
 
 input#search {
-  background-color: #666a73;
+  background-color: #d9d1c7;
   border: none;
   border-radius: 4px;
   float: left;
   position: relative;
-  color: #fff;
+  color: #000;
   width: 100%;
   box-sizing: border-box;
   height: 37px;
@@ -66,7 +71,7 @@ input#search {
 }
 
 #cardlist-div {
-  background-color: #666a73;
+  background-color: #d9d1c7;
   overflow-y: scroll;
   flex: 1 1 auto;
   border: none;
