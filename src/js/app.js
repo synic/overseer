@@ -44,7 +44,12 @@ function performSearch(keywords) {
           card: c,
           index: i,
         });
-        const img = document.getElementById(`card-image-${i}`);
+        let img = document.getElementById(`card-image-${i}`);
+        img.onload = () => {
+          img = document.getElementById(`card-image-${i}`);
+          img.style.transition = 'opacity 0.3s';
+          img.style.opacity = '1';
+        };
         img.src = c.imageUrl;
       }
     });

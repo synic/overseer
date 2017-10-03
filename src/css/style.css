@@ -118,6 +118,16 @@ input#search {
   vertical-align: middle;
 }
 
+.card-image-holder {
+  width: 200px;
+  height: 279px;
+  border-radius: 4px;
+  background-image: url('../images/example_card.jpg');
+  background-repeat: no-repeat;
+  background-position: left-top;
+  background-size: 100%;
+}
+
 .card-image {
   vertical-align: middle;
   flex: 0 0 auto;
@@ -127,8 +137,9 @@ input#search {
   padding: 6px;
 }
 
-img.card-image {
+.card-image-image {
   vertical-align: middle;
+  opacity: 0;
 }
 
 .mana-image {

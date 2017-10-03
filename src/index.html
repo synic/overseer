@@ -23,12 +23,15 @@
     <script id="card-row-template" type="text/x-handlebars-template">
       <div class="card-row">
         <div class="card-image">
-          <span class="align-helper"></span>
-          <img id="card-image-{{index}}"
-               src="images/example_card.jpg"
-               onerror='this.src="images/example_card.jpg";'
-               width="200"
-               height="279">
+          <!-- <span class="align-helper"></span> -->
+          <div class="card-image-holder">
+            <img id="card-image-{{index}}"
+                 class="card-image-image"
+                 src="images/example_card.jpg"
+                 onerror='this.src="images/example_card.jpg";'
+                 width="200"
+                 height="279">
+          </div>
         </div>
         <div class="card-information">
           <div class="card-header">
