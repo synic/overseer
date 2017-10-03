@@ -5,7 +5,7 @@
     <title>MTG Card Lookup</title>
     <link href="css/style.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i"
-      rel="stylesheet">
+          rel="stylesheet">
     <script src="js/app.js"></script>
   </head>
   <body>
@@ -24,9 +24,11 @@
       <div class="card-row">
         <div class="card-image">
           <span class="align-helper"></span>
-          <img id="card-image-{{index}}" src="images/example_card.jpg"
-            onerror='this.src="images/example_card.jpg";'
-            width="200" height="279">
+          <img id="card-image-{{index}}"
+               src="images/example_card.jpg"
+               onerror='this.src="images/example_card.jpg";'
+               width="200"
+               height="279">
         </div>
         <div class="card-information">
           <div class="card-header">
@@ -39,9 +41,9 @@
           </div>
           <hr class="card-name-separator">
           <div class="card-type">
-            {{card.type}}
+            {{card.type}}{{#if card.power}},{{/if}}
             {{#if card.power}}
-              , {{card.power}}/{{card.toughness}}
+              {{card.power}}/{{card.toughness}}
             {{/if}}
           </div>
           <div class="card-text">
