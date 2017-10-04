@@ -7,14 +7,14 @@ const WINDOW_HEIGHT = 600;
 const WINDOW_WIDTH = 800;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+if (require( // eslint-disable-line global-require
+  'electron-squirrel-startup')) {
   app.quit();
 }
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow = null;
-let helpWindow = null;
 let tray = null;
 
 const createWindow = () => {
@@ -46,6 +46,10 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/../index.html`);
 
+  // open the developer tools
+  // mainWindow.webContents.openDevTools();
+
+  // manage window state (width, height, x, y)
   mainWindowState.manage(mainWindow);
 
   // Emitted when the window is closed.
@@ -57,7 +61,6 @@ const createWindow = () => {
       mainWindow.parent.close();
     }
     mainWindow = null;
-    helpWindow = null;
   });
 };
 

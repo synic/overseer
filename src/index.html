@@ -11,27 +11,24 @@
   <body>
     <div class="window">
       <header>
-        <input type="text" id="search" />
-        <img src="images/loading.gif" id="loading-image">
+        <input type="text" id="search-txt" />
+        <img src="images/loading.gif" id="loading-img">
       </header>
 
-      <div id="cardlist-div"></div>
+      <div id="cardlist"></div>
       <footer></footer>
     </div>
 
     <!-- card row template -->
-    <script id="card-row-template" type="text/x-handlebars-template">
+    <script id="card-row-tmpl" type="text/x-handlebars-template">
       <div class="card-row">
-        <div class="card-image">
-          <!-- <span class="align-helper"></span> -->
-          <div class="card-image-holder">
-            <img id="card-image-{{index}}"
-                 class="card-image-image"
-                 src="images/example_card.jpg"
-                 onerror='this.src="images/example_card.jpg";'
-                 width="200"
-                 height="279">
-          </div>
+        <div class="card-img-container">
+          <img id="card-img-{{index}}"
+               src="images/example_card.jpg"
+               onerror='this.src="images/example_card.jpg";'
+               class="card-img"
+               width="200"
+               height="279">
         </div>
         <div class="card-information">
           <div class="card-header">

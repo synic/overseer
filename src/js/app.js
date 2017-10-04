@@ -6,20 +6,19 @@ let rowTemplate = null;
 
 handlebars.registerHelper('mtg', (text, wh) => {
   if (!text) return '';
-  let t = text.replace(
-      /([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br>$2');
+  let t = text.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br>$2');
 
   t = t.replace(/\{([0-9A-Z]\/?[0-9A-Z]?)\}/g, (all, g1) => {
     const imageName = g1.toLowerCase().replace('/', '');
     return `<img src="images/mana/mana-${imageName}.svg"
-      width="${wh}" height="${wh}" class="mana-image">`;
+      width="${wh}" height="${wh}" class="mana-img">`;
   });
 
   return new handlebars.SafeString(t);
 });
 
 function setLoading(loading) {
-  const img = document.getElementById('loading-image');
+  const img = document.getElementById('loading-img');
   if (loading) {
     img.style.display = 'block';
   } else {
@@ -28,27 +27,27 @@ function setLoading(loading) {
 }
 
 function performSearch(keywords) {
-  const cardList = document.getElementById('cardlist-div');
-  const search = document.getElementById('search');
+  const cardList = document.getElementById('cardlist');
+  const search = document.getElementById('search-txt');
   cardList.innerHTML = '';
   setLoading(true);
 
   mtg.card.where({ name: keywords }).then((cards) => {
     setLoading(false);
-    console.log(`Found ${cards.length} cards...`);
+    console.log( // eslint-disable-line no-console
+      `Found ${cards.length} cards...`);
 
     cards.forEach((c, i) => {
-      console.log(c);
+      console.log(c); // eslint-disable-line no-console
       if (c.imageUrl) {
         cardList.innerHTML += rowTemplate({
           card: c,
           index: i,
         });
-        let img = document.getElementById(`card-image-${i}`);
+        let img = document.getElementById(`card-img-${i}`);
         img.onload = () => {
-          img = document.getElementById(`card-image-${i}`);
-          img.style.transition = 'opacity 0.3s';
-          img.style.opacity = '1';
+          img = document.getElementById(`card-img-${i}`);
+          img.className += ' card-img-loaded';
         };
         img.src = c.imageUrl;
       }
@@ -60,7 +59,7 @@ function performSearch(keywords) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const search = document.getElementById('search');
+  const search = document.getElementById('search-txt');
   search.focus();
 
   window.addEventListener('click', () => {
@@ -69,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   rowTemplate = handlebars.compile(
-    document.getElementById('card-row-template').innerHTML);
+    document.getElementById('card-row-tmpl').innerHTML);
 
   search.addEventListener('keydown', (e) => {
     if (e.which === 13) {
