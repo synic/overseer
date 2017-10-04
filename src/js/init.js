@@ -1,6 +1,7 @@
 import { app, BrowserWindow, globalShortcut, Menu, Tray } from 'electron';
 
 const ipc = require('electron').ipcMain;
+const electron = require('electron');
 const windowStateKeeper = require('electron-window-state');
 
 const WINDOW_HEIGHT = 600;
@@ -18,6 +19,10 @@ let mainWindow = null;
 let tray = null;
 
 const createWindow = () => {
+  const bounds = electron.screen.getPrimaryDisplay().bounds;
+  const xCoord = bounds.x + ((bounds.width - WINDOW_WIDTH) / 2);
+  const yCoord = bounds.y + ((bounds.height - WINDOW_HEIGHT) / 2);
+
   const mainWindowState = windowStateKeeper({
     defaultWidth: WINDOW_WIDTH,
     defaultHeight: WINDOW_HEIGHT,
@@ -29,8 +34,8 @@ const createWindow = () => {
     modal: true,
     width: mainWindowState.width,
     height: mainWindowState.height,
-    x: mainWindowState.x,
-    y: mainWindowState.y,
+    x: mainWindowState.x === undefined ? xCoord : mainWindowState.x,
+    y: mainWindowState.y === undefined ? yCoord : mainWindowState.y,
     alwaysOnTop: true,
     minimizable: false,
     darkTheme: true,
