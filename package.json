@@ -1,6 +1,6 @@
 {
   "name": "overseer",
-  "productName": "overseer",
+  "productName": "Overseer",
   "version": "1.0.0",
   "description": "MTG Card Search",
   "main": "src/js/init.js",
