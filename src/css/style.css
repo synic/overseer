@@ -9,6 +9,7 @@ html, body {
   background-color: #666a73;
   box-sizing: border-box;
   font-family: 'Raleway', sans-serif;
+  -webkit-app-region: drag;
 }
 
 body {

@@ -30,7 +30,7 @@ const createWindow = () => {
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    parent: new BrowserWindow({ show: false }),
+    parent: process.platform !== 'darwin' ? new BrowserWindow({ show: false })  : null,
     modal: true,
     width: mainWindowState.width,
     height: mainWindowState.height,
@@ -38,13 +38,16 @@ const createWindow = () => {
     y: mainWindowState.y === undefined ? yCoord : mainWindowState.y,
     alwaysOnTop: true,
     minimizable: false,
+    closable: true,
+    maximizable: false,
+    fullscreenable: false,
     darkTheme: true,
     show: false,
     backgroundColor: '#666a73',
     skipTaskbar: process.platform !== 'darwin',
-    frame: process.platform === 'darwin',
+    frame: false,
     title: 'Overseer',
-    titleBarStyle: 'hidden',
+    autoHideMenuBar: false,
     icon: `${__dirname}/../../assets/img/icon.png`,
   });
 

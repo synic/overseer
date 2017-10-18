@@ -29,7 +29,6 @@ function setLoading(loading) {
 
 function performSearch(keywords) {
   const cardList = document.getElementById('cardlist');
-  search = document.getElementById('search-txt');
   cardList.innerHTML = '';
   setLoading(true);
 
@@ -60,7 +59,7 @@ function performSearch(keywords) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const search = document.getElementById('search-txt');
+  search = document.getElementById('search-txt');
   search.focus();
 
   window.addEventListener('click', () => {
