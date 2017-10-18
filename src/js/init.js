@@ -122,6 +122,9 @@ app.on('ready', () => {
     } else {
       mainWindow.show();
       mainWindow.focus();
+
+      // tell the main window to focus and select text in the search box
+      mainWindow.webContents.send('focus-search');
     }
   });
 });

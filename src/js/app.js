@@ -3,6 +3,7 @@ const mtg = require('mtgsdk');
 const handlebars = require('handlebars');
 
 let rowTemplate = null;
+let search = null;
 
 handlebars.registerHelper('mtg', (text, wh) => {
   if (!text) return '';
@@ -28,7 +29,7 @@ function setLoading(loading) {
 
 function performSearch(keywords) {
   const cardList = document.getElementById('cardlist');
-  const search = document.getElementById('search-txt');
+  search = document.getElementById('search-txt');
   cardList.innerHTML = '';
   setLoading(true);
 
@@ -85,5 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+
+// IPC Handlers
+
+ipc.on('focus-search', () => {
+  if (search != null) {
+    search.focus();
+    search.select();
+  }
+});
 
 /* vim: set sts=2 ts=2 sw=2 : */
