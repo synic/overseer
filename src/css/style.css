@@ -167,6 +167,10 @@ hr.card-name-separator {
 
 .card-extra {
   flex: 0 0 auto;
+}
+
+.card-legality {
+  flex: 0 0 auto;
   margin-top: 15px;
 }
 

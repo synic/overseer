@@ -40,9 +40,22 @@ function performSearch(keywords) {
     cards.forEach((c, i) => {
       console.log(c); // eslint-disable-line no-console
       if (c.imageUrl) {
+        const legalities = [];
+
+        c.legalities.forEach((legality) => {
+          if (legality.legality !== 'Banned') {
+            let format = legality.format;
+            if (legality.legality === 'Restricted') {
+              format += ' (Restricted)';
+            }
+            legalities.push(format);
+          }
+        });
+
         cardList.innerHTML += rowTemplate({
           card: c,
           index: i,
+          legalities: legalities.join(', '),
         });
         let img = document.getElementById(`card-img-${i}`);
         img.onload = () => {

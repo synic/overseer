@@ -30,7 +30,7 @@ const createWindow = () => {
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    parent: process.platform !== 'darwin' ? new BrowserWindow({ show: false })  : null,
+    parent: process.platform !== 'darwin' ? new BrowserWindow({ show: false }) : null,
     modal: true,
     width: mainWindowState.width,
     height: mainWindowState.height,
