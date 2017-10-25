@@ -1,11 +1,12 @@
 import { app, BrowserWindow, globalShortcut, Menu, Tray } from 'electron';
 
-const ipc = require('electron').ipcMain;
 const electron = require('electron');
+const ipc = require('electron').ipcMain;
 const windowStateKeeper = require('electron-window-state');
 
 const WINDOW_HEIGHT = 600;
 const WINDOW_WIDTH = 800;
+const IMAGE_FOLDER = `${__dirname}/../../assets/img`;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require( // eslint-disable-line global-require
@@ -94,7 +95,14 @@ app.on('ready', () => {
   createWindow();
 
   // create the system tray icon
-  tray = new Tray(`${__dirname}/../../assets/img/trayicon.png`);
+  let trayImage = `${IMAGE_FOLDER}/tray/iconTemplate.png`;
+
+  if (process.platform === 'win32') {
+    trayImage = `${IMAGE_FOLDER}/tray/icon.ico`;
+  }
+
+  tray = new Tray(trayImage);
+
   const contextMenu = Menu.buildFromTemplate([
     {
       label: 'Quit',
