@@ -58,6 +58,7 @@ textarea, input, button { outline: none; }
 }
 
 input#search-txt {
+  -webkit-app-region: no-drag;
   background-color: #d9d1c7;
   border: none;
   border-radius: 4px;

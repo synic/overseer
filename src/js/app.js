@@ -42,15 +42,17 @@ function performSearch(keywords) {
       if (c.imageUrl) {
         const legalities = [];
 
-        c.legalities.forEach((legality) => {
-          if (legality.legality !== 'Banned') {
-            let format = legality.format;
-            if (legality.legality === 'Restricted') {
-              format += ' (Restricted)';
+        if (c.legalities !== undefined) {
+          c.legalities.forEach((legality) => {
+            if (legality.legality !== 'Banned') {
+              let format = legality.format;
+              if (legality.legality === 'Restricted') {
+                format += ' (Restricted)';
+              }
+              legalities.push(format);
             }
-            legalities.push(format);
-          }
-        });
+          });
+        }
 
         cardList.innerHTML += rowTemplate({
           card: c,

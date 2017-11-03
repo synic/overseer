@@ -99,6 +99,8 @@ app.on('ready', () => {
 
   if (process.platform === 'win32') {
     trayImage = `${IMAGE_FOLDER}/tray/icon.ico`;
+  } else if (process.platform === 'linux') {
+    trayImage = `${IMAGE_FOLDER}/tray/icon.png`;
   }
 
   tray = new Tray(trayImage);
