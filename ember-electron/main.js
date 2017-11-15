@@ -1,4 +1,7 @@
-import { app, BrowserWindow, globalShortcut, Menu, Tray } from 'electron';
+/* eslint-env node */
+const { app, BrowserWindow, globalShortcut, Menu, protocol, Tray } = require('electron');
+const { dirname, join, resolve } = require('path');
+const protocolServe = require('electron-protocol-serve');
 
 const electron = require('electron');
 const ipc = require('electron').ipcMain;
@@ -6,7 +9,7 @@ const windowStateKeeper = require('electron-window-state');
 
 const WINDOW_HEIGHT = 600;
 const WINDOW_WIDTH = 800;
-const IMAGE_FOLDER = `${__dirname}/../../assets/img`;
+const IMAGE_FOLDER = `${__dirname}/../ember/icons/img`;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require( // eslint-disable-line global-require
@@ -18,6 +21,29 @@ if (require( // eslint-disable-line global-require
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow = null;
 let tray = null;
+
+// Registering a protocol & schema to serve our Ember application
+protocol.registerStandardSchemes(['serve'], { secure: true });
+protocolServe({
+  cwd: join(__dirname || resolve(dirname('')), '..', 'ember'),
+  app,
+  protocol,
+});
+
+// Uncomment the lines below to enable Electron's crash reporter
+// For more information, see http://electron.atom.io/docs/api/crash-reporter/
+// electron.crashReporter.start({
+//     productName: 'YourName',
+//     companyName: 'YourCompany',
+//     submitURL: 'https://your-domain.com/url-to-submit',
+//     autoSubmit: true
+// });
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
 
 const createWindow = () => {
   const bounds = electron.screen.getPrimaryDisplay().bounds;
@@ -52,16 +78,39 @@ const createWindow = () => {
     icon: `${__dirname}/../../assets/img/icon.png`,
   });
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/../index.html`);
+  // If you want to open up dev tools programmatically, call
+  // mainWindow.openDevTools();
 
-  // open the developer tools
-  // mainWindow.webContents.openDevTools();
+  const emberAppLocation = 'serve://dist';
+
+  // Load the ember application using our custom protocol/scheme
+  mainWindow.loadURL(emberAppLocation);
 
   // manage window state (width, height, x, y)
   mainWindowState.manage(mainWindow);
 
-  // Emitted when the window is closed.
+  // If a loading operation goes wrong, we'll send Electron back to
+  // Ember App entry point
+  mainWindow.webContents.on('did-fail-load', () => {
+    mainWindow.loadURL(emberAppLocation);
+  });
+
+  mainWindow.webContents.on('crashed', () => {
+    console.log('Your Ember app (or other code) in ' +
+      'the main window has crashed.');
+    console.log('This is a serious issue that needs ' +
+      'to be handled and/or debugged.');
+  });
+
+  mainWindow.on('unresponsive', () => {
+    console.log('Your Ember app (or other code) has ' +
+      'made the window unresponsive.');
+  });
+
+  mainWindow.on('responsive', () => {
+    console.log('The main window has become responsive again.');
+  });
+
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
@@ -71,6 +120,7 @@ const createWindow = () => {
     }
     mainWindow = null;
   });
+  // mainWindow.webContents.openDevTools();
 };
 
 const shouldQuit = app.makeSingleInstance(() => {
@@ -167,4 +217,26 @@ ipc.on('mainwindow-debug', () => {
   mainWindow.webContents.openDevTools();
 });
 
-// vim: set sts=2 ts=2 sw=2 :
+// Handle an unhandled error in the main thread
+//
+// Note that 'uncaughtException' is a crude mechanism for exception handling
+// intended to be used only as a last resort. The event should not be used as
+// an equivalent to "On Error Resume Next". Unhandled exceptions inherently
+// mean that an application is in an undefined state. Attempting to resume
+// application code without properly recovering from the exception can cause
+// additional unforeseen and unpredictable issues.
+//
+// Attempting to resume normally after an uncaught exception can be similar to
+// pulling out of the power cord when upgrading a computer -- nine out of ten
+// times nothing happens - but the 10th time, the system becomes corrupted.
+//
+// The correct use of 'uncaughtException' is to perform synchronous cleanup of
+// allocated resources (e.g. file descriptors, handles, etc) before shutting
+// down the process. It is not safe to resume normal operation after
+// 'uncaughtException'.
+process.on('uncaughtException', (err) => {
+  console.log('An exception in the main thread was not handled.');
+  console.log('This is a serious issue that needs ' +
+    'to be handled and/or debugged.');
+  console.log(`Exception: ${err}`);
+});
