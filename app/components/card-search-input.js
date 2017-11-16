@@ -23,6 +23,7 @@ export default Ember.Component.extend({
 
   searchCardsTask: task(function* (search) {
     if([':debug:', ':exit:', ''].includes(search)) {
+      this.set('search', '');
       this.sendAction('cardsDidLoad', '', []);
       this.sendAction('cardSearchFocus');
       yield null;
