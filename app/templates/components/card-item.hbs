@@ -1,0 +1,37 @@
+<div class="card-img-container">
+  <input type="hidden" value="{{card.imageUrl}}" class="card-image-url">
+  <img src="assets/images/example_card.jpg"
+       onerror='this.src="assets/images/example_card.jpg";'
+       class="card-img"
+       width="200"
+       height="279">
+</div>
+<div class="card-information">
+  <div class="card-header">
+    <div class="card-name">
+      {{card.name}}
+    </div>
+    <div class="card-mana-cost">
+      {{mtg-txt card.manaCost '17'}}
+    </div>
+  </div>
+  <hr class="card-name-separator">
+  <div class="card-type">
+    {{card.type}}{{#if card.power}},{{/if}}
+    {{#if card.power}}
+      {{card.power}}/{{card.toughness}}
+    {{/if}}
+  </div>
+  <div class="card-text">
+    {{mtg-txt card.text '14'}}
+  </div>
+  <div class="card-flavor">
+    {{mtg-txt card.flavor '14'}}
+  </div>
+  <div class="card-legality">
+    Legal In: {{card.legalities}}
+  </div>
+  <div class="card-extra">
+    {{card.setName}} ({{card.set}}), {{card.rarity}}
+  </div>
+</div>
