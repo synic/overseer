@@ -1,5 +1,12 @@
 /* eslint-env node */
-const { app, BrowserWindow, globalShortcut, Menu, protocol, Tray } = require('electron');
+const {
+  app,
+  BrowserWindow,
+  globalShortcut,
+  Menu,
+  protocol,
+  Tray
+} = require('electron');
 const { dirname, join, resolve } = require('path');
 const protocolServe = require('electron-protocol-serve');
 
@@ -29,15 +36,6 @@ protocolServe({
   app,
   protocol,
 });
-
-// Uncomment the lines below to enable Electron's crash reporter
-// For more information, see http://electron.atom.io/docs/api/crash-reporter/
-// electron.crashReporter.start({
-//     productName: 'YourName',
-//     companyName: 'YourCompany',
-//     submitURL: 'https://your-domain.com/url-to-submit',
-//     autoSubmit: true
-// });
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -117,7 +115,10 @@ const createWindow = () => {
     }
     mainWindow = null;
   });
-  // mainWindow.webContents.openDevTools();
+
+  if (process.argv.includes('--debug')) {
+    mainWindow.webContents.openDevTools();
+  }
 };
 
 const shouldQuit = app.makeSingleInstance(() => {
@@ -202,15 +203,15 @@ app.on('activate', () => {
 
 // IPC Handlers
 
-ipc.on('application-exit', () => {
+ipc.on('application-cmd-exit', () => {
   app.quit();
 });
 
-ipc.on('mainwindow-hide', () => {
+ipc.on('application-cmd-hide', () => {
   mainWindow.hide();
 });
 
-ipc.on('mainwindow-debug', () => {
+ipc.on('application-cmd-debug', () => {
   mainWindow.webContents.openDevTools();
 });
 
