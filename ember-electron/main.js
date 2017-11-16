@@ -78,9 +78,6 @@ const createWindow = () => {
     icon: `${__dirname}/../../assets/img/icon.png`,
   });
 
-  // If you want to open up dev tools programmatically, call
-  // mainWindow.openDevTools();
-
   const emberAppLocation = 'serve://dist';
 
   // Load the ember application using our custom protocol/scheme

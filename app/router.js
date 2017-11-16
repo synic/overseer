@@ -9,6 +9,7 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('cards');
   this.route('farts');
+  this.route('mtg-cards');
 });
 
 export default Router;

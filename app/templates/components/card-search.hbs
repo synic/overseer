@@ -1,24 +1,11 @@
-<header>
-  {{input value=search
-          id="search-txt"
-          class="search-txt"
-          enter=(perform searchCards search)}}
+{{card-search-input
+  class="card-search-input"
+  cardsDidLoad=(action "cardsDidLoad")
+  cardSearchFocus=(action "cardSearchFocus")}}
 
-  {{#if searchCards.isRunning}}
-    <img src="assets/images/loading.gif" id="loading-img">
-  {{/if}}
-</header>
+{{card-list
+  class="cardlist"
+  cards=cards
+  performedSearch=performedSearch}}
 
-<div id="cardlist">
-  {{#each cards as |card|}}
-    {{card-item card=card}}
-  {{else}}
-    {{#if (and search searchPerformed)}}
-      <div class="cardlist-message">
-        Nothing found for "{{searchPerformed}}".
-      </div>
-    {{/if}}
-  {{/each}}
-</div>
-
-<footer></footer>
+<div class="card-search-footer"></div>

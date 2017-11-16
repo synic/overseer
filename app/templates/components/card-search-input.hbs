@@ -1,0 +1,8 @@
+{{input value=search
+        id="search-txt"
+        class="search-txt"
+        enter=(perform searchCardsTask search)}}
+
+{{#if searchCardsTask.isRunning}}
+  <img src="assets/images/loading.gif" id="loading-img">
+{{/if}}
