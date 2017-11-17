@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
 const exampleCards = [
   'Lifecrafter\'s Bestiary',
@@ -9,19 +10,23 @@ const exampleCards = [
   'Blood Artist',
   'Harmless Offering',
   'Snapcaster Mage',
+  'Inventors\' Fair',
+  'Tezzeret, Agent of Bolas',
+  'Spell Snare',
+  'Cryptic Command',
+  'Mana Leak',
+  'Black Lotus',
+  'Ensnaring Bridge',
 ];
 
-export default Ember.Component.extend({
+export default Component.extend({
+
+  placeholderText: computed(() => {
+    return `Type a card name, e.g. "${exampleCards.randomElement()}"`;
+  }),
+
   keyDown(event) {
     this.sendAction('searchTextInputAction', event.which, event);
   },
 
-  didInsertElement() {
-    this._super(...arguments);
-
-    const name = exampleCards[Math.floor(Math.random()*exampleCards.length)];
-
-    this.$('#search-txt').prop(
-      'placeholder', `Type a card name, e. g. "${name}"`);
-  },
 });

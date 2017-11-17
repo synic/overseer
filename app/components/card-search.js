@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 const ipc = (window.requireNode !== undefined) ?
       window.requireNode('electron').ipcRenderer : null;
 
-export default Ember.Component.extend({
-  store:           Ember.inject.service(),
+export default Component.extend({
+  store:           service(),
   cards:           null,
   performedSearch: null,
 
@@ -32,10 +33,12 @@ export default Ember.Component.extend({
   },
 
   cardsLoaded(search, cards) {
-    this.set('cards', cards);
+    this.setProperties({
+      cards,
+      search,
+      performedSearch: search,
+    });
     this.cardSearchFocus();
-    this.set('search', search);
-    this.set('performedSearch', search);
   },
 
   sendApplicationCommand(command) {
@@ -48,8 +51,7 @@ export default Ember.Component.extend({
 
   searchCardsTask: task(function* (search) {
     if([':debug:', ':exit:', ''].includes(search)) {
-      this.set('search', '');
-      this.cardsLoaded(search, []);
+      this.cardsLoaded('', []);
       yield null;
     } else {
       yield this.get('store').query('card', {
@@ -67,7 +69,8 @@ export default Ember.Component.extend({
       const search = this.get('search');
 
       if (code === 27) {
-        // escape pressed, let's send the application node process the `hide` command.
+        // escape pressed, let's send the application node process the `hide`
+        // command.
         this.sendApplicationCommand(':hide:');
       } else if(code === 13) {
 
@@ -81,7 +84,7 @@ export default Ember.Component.extend({
           this.sendApplicationCommand(search);
         } else {
           // perform the actual search
-          this.get('searchCardsTask').perform(this.get('search'));
+          this.get('searchCardsTask').perform(search);
         }
       }
     },

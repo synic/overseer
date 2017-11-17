@@ -20,7 +20,9 @@ export default DS.Transform.extend({
 
   serialize(deserialized) {
     // TODO: this will break if we ever try to create a record
-    // using this serializer.
+    // using this serializer.  the magicthegathering.io api does not
+    // support writing, but if it ever does, you will need to
+    // implement this method.
     return deserialized;
   }
 });
