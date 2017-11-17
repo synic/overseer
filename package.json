@@ -1,6 +1,7 @@
 {
   "name": "overseer",
   "version": "0.0.0",
+  "private": true,
   "description": "Small description for overseer goes here",
   "license": "MIT",
   "author": "",
@@ -22,34 +23,32 @@
     "devtron": "^1.4.0",
     "electron-forge": "^4.1.3",
     "electron-prebuilt-compile": "1.7.9",
-    "electron-window-state": "^4.1.1",
-    "ember-ajax": "^2.4.1",
-    "ember-cli": "2.12.1",
-    "ember-cli-app-version": "^2.0.0",
-    "ember-cli-babel": "^5.1.7",
-    "ember-cli-dependency-checker": "^1.3.0",
-    "ember-cli-eslint": "^3.0.0",
-    "ember-cli-htmlbars": "^1.1.1",
-    "ember-cli-htmlbars-inline-precompile": "^0.3.6",
+    "ember-ajax": "^3.0.0",
+    "ember-cli": "~2.16.2",
+    "ember-cli-app-version": "^3.0.0",
+    "ember-cli-babel": "^6.6.0",
+    "ember-cli-dependency-checker": "^2.0.0",
+    "ember-cli-eslint": "^4.0.0",
+    "ember-cli-htmlbars": "^2.0.1",
+    "ember-cli-htmlbars-inline-precompile": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
-    "ember-cli-qunit": "^3.1.0",
-    "ember-cli-shims": "^1.0.2",
+    "ember-cli-qunit": "^4.0.0",
+    "ember-cli-shims": "^1.1.0",
     "ember-cli-sri": "^2.1.0",
-    "ember-cli-uglify": "^1.2.0",
+    "ember-cli-uglify": "^2.0.0",
     "ember-concurrency": "^0.8.12",
-    "ember-data": "^2.12.0",
+    "ember-data": "~2.16.2",
     "ember-electron": "^2.7.2",
-    "ember-export-application-global": "^1.0.5",
-    "ember-load-initializers": "^0.6.0",
-    "ember-resolver": "^2.0.3",
-    "ember-source": "~2.12.0",
+    "ember-export-application-global": "^2.0.0",
+    "ember-load-initializers": "^1.0.0",
+    "ember-resolver": "^4.0.0",
+    "ember-source": "~2.16.0",
     "ember-truth-helpers": "^2.0.0",
     "loader.js": "^4.2.3"
   },
   "engines": {
-    "node": ">= 4"
+    "node": "^4.5 || 6.* || >= 7.*"
   },
-  "private": true,
   "dependencies": {
     "electron-compile": "^6.4.2",
     "electron-protocol-serve": "^1.3.0",
@@ -57,32 +56,6 @@
     "electron-window-state": "^4.1.1"
   },
   "config": {
-    "forge": {
-      "make_targets": {
-        "win32": [
-          "squirrel"
-        ],
-        "darwin": [
-          "zip"
-        ],
-        "linux": [
-          "deb",
-          "rpm"
-        ]
-      },
-      "electronPackagerConfig": {},
-      "electronWinstallerConfig": {
-        "name": ""
-      },
-      "electronInstallerDebian": {},
-      "electronInstallerRedhat": {},
-      "github_repository": {
-        "owner": "",
-        "name": ""
-      },
-      "windowsStoreConfig": {
-        "packageName": ""
-      }
-    }
+    "forge": "./ember-electron/electron-forge-config.js"
   }
 }

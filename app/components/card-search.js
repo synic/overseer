@@ -38,11 +38,15 @@ export default Ember.Component.extend({
     this.set('performedSearch', search);
   },
 
-  sendApplicationCommand(command) {
+  sendApplicationCommand(command, clearSearch = true) {
     if (ipc === null) return;
 
     command = command.substr(1, command.length - 2);
-    this.cardsLoaded('', []);
+
+    if (clearSearch) {
+      this.cardsLoaded('', []);
+    }
+
     ipc.send(`application-cmd-${command}`);
   },
 
@@ -68,7 +72,7 @@ export default Ember.Component.extend({
 
       if (code === 27) {
         // escape pressed, let's send the application node process the `hide` command.
-        this.sendApplicationCommand(':hide:');
+        this.sendApplicationCommand(':hide:', false);
       } else if(code === 13) {
 
         // if the search terms begin with `:` and end with `:` (for example,
