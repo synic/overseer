@@ -11,7 +11,10 @@ module.exports = {
       "rpm"
     ]
   },
-  "electronPackagerConfig": {},
+  "electronPackagerConfig": {
+    "icon": "public/icons/img/icon",
+    "extendInfo": "public/mac/info.plist"
+  },
   "electronWinstallerConfig": {
     "name": ""
   },

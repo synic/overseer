@@ -22,3 +22,6 @@ testem.log
 bower.json.ember-try
 package.json.ember-try
 electron-out/
+
+# os x, sigh
+.DS_Store
