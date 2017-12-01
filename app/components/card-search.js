@@ -1,8 +1,27 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
+import { computed } from '@ember/object';
 const ipc = (window.requireNode !== undefined) ?
       window.requireNode('electron').ipcRenderer : null;
+
+const exampleCards = [
+  'Lifecrafter\'s Bestiary',
+  'Fatal Push',
+  'Lantern of Insight',
+  'Whir of Invention',
+  'Mox Opal',
+  'Blood Artist',
+  'Harmless Offering',
+  'Snapcaster Mage',
+  'Inventors\' Fair',
+  'Tezzeret, Agent of Bolas',
+  'Spell Snare',
+  'Cryptic Command',
+  'Mana Leak',
+  'Black Lotus',
+  'Ensnaring Bridge',
+];
 
 export default Component.extend({
   store:           service(),
@@ -48,6 +67,10 @@ export default Component.extend({
 
     ipc.send(`application-cmd-${command}`);
   },
+
+  placeholderText: computed(() => {
+    return `Type a card name, e.g. "${exampleCards.randomElement()}"`;
+  }),
 
   searchCardsTask: task(function* (search) {
     if([':debug:', ':exit:', ''].includes(search)) {

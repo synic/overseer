@@ -1,12 +1,21 @@
-{{card-search-input
-  class="card-search-input"
-  search=search
-  searchTextInputAction=(action "searchTextInputAction")
-  searchCardsTask=searchCardsTask}}
+{{input
+  placeholder=placeholderText
+  value=search
+  id="search-txt"
+  class="search-txt"}}
 
-{{card-list
-  class="cardlist"
-  cards=cards
-  performedSearch=performedSearch}}
+{{#if searchCardsTask.isRunning}}
+  <img src="assets/images/loading.gif" id="loading-img">
+{{/if}}
+
+{{#each cards as |card|}}
+  {{card-item class="card-row" card=card}}
+{{else}}
+  {{#if performedSearch}}
+    <div class="cardlist-message">
+      Nothing found for "{{performedSearch}}".
+    </div>
+  {{/if}}
+{{/each}}
 
 <div class="card-search-footer"></div>
