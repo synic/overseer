@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 const ipc = (window.requireNode !== undefined) ?
       window.requireNode('electron').ipcRenderer : null;
@@ -51,15 +50,6 @@ export default Component.extend({
     this.$('#search-txt').focus().select();
   },
 
-  cardsLoaded(search, cards) {
-    this.setProperties({
-      cards,
-      search,
-      performedSearch: search,
-    });
-    this.cardSearchFocus();
-  },
-
   sendApplicationCommand(command) {
     if (ipc === null) return;
 
@@ -72,44 +62,27 @@ export default Component.extend({
     return `Type a card name, e.g. "${exampleCards.randomElement()}"`;
   }),
 
-  searchCardsTask: task(function* (search) {
-    if([':debug:', ':exit:', ''].includes(search)) {
-      this.cardsLoaded('', []);
-      yield null;
-    } else {
-      yield this.get('store').query('card', {
-        name: search,
-        contains: 'imageUrl',
-      }).then((results) => {
-        this.cardsLoaded(search, results);
-      });
+  performSearch() {
+    const search = this.get('search');
+    this.cardSearchFocus();
+    if (search.startsWith(':') && search.endsWith(':')) {
+      this.sendApplicationCommand(search);
+      this.set('search', '');
+      return;
     }
-  }).restartable(),
 
-  // actions
-  actions: {
-    searchTextInputAction(code, event) {
-      const search = this.get('search');
+    this.set('query', this.get('search'));
+  },
 
-      if (code === 27) {
-        // escape pressed, let's send the application node process the `hide`
-        // command.
-        this.sendApplicationCommand(':hide:');
-      } else if(code === 13) {
+  keyDown(event) {
+    const code = event.which;
 
-        // if the search terms begin with `:` and end with `:` (for example,
-        // `:debug`:, it's a special command we should send to the electron
-        // node process.
-        if (search.startsWith(':') && search.endsWith(':')) {
-          if (event !== undefined) {
-            event.preventDefault();
-          }
-          this.sendApplicationCommand(search);
-        } else {
-          // perform the actual search
-          this.get('searchCardsTask').perform(search);
-        }
-      }
-    },
-  }
+    if (code === 27) {
+      // escape pressed, let's send the application node process the `hide`
+      // command.
+      this.sendApplicationCommand(':hide:');
+    } else if(code === 13) {
+      this.performSearch();
+    }
+  },
 });
