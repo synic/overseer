@@ -4,6 +4,7 @@ const {
   BrowserWindow,
   globalShortcut,
   Menu,
+  MenuItem,
   protocol,
   Tray
 } = require('electron');
@@ -188,6 +189,8 @@ app.on('ready', () => {
       mainWindow.webContents.send('focus-search');
     }
   });
+
+  mainWindow.webContents.openDevTools();
 });
 
 // Quit when all windows are closed.

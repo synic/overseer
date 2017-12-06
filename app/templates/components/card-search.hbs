@@ -1,12 +1,26 @@
-{{card-search-input
-  class="card-search-input"
-  search=search
-  searchTextInputAction=(action "searchTextInputAction")
-  searchCardsTask=searchCardsTask}}
+{{#card-loader query=query as |loader|}}
+  <div class="card-search-input">
+    {{input
+      placeholder=placeholderText
+      value=search
+      id="search-txt"
+      class="search-txt"}}
 
-{{card-list
-  class="cardlist"
-  cards=cards
-  performedSearch=performedSearch}}
+    {{# if loader.loading}}
+      <img src="assets/images/loading.gif" id="loading-img">
+    {{/if}}
+  </div>
 
-<div class="card-search-footer"></div>
+  <div class="cardlist">
+    {{#each loader.cards as |card|}}
+      {{card-item class="card-row" card=card}}
+    {{else}}
+      {{#if loader.lastQuery}}
+        <div class="cardlist-message">
+          Nothing found for "{{loader.lastQuery}}".
+        </div>
+      {{/if}}
+    {{/each}}
+  </div>
+  <div class="card-search-footer"></div>
+{{/card-loader}}

@@ -9,7 +9,7 @@ html, body {
   background-color: #666a73;
   box-sizing: border-box;
   font-family: 'Raleway', sans-serif;
-  -webkit-app-region: drag;
+  /* -webkit-app-region: drag; */
 }
 
 body {
@@ -18,9 +18,27 @@ body {
   overflow: hidden;
 
   /* disable text selection so it doesn't seem like a web app */
-  -webkit-user-select: none;
+  /* -webkit-user-select: none; */
   border: 1px solid #444;
   border-radius: 4px;
+  height: 100%;
+
+  > .ember-view {
+    height: 100%;
+
+    > .ember-view {
+      height: 100%;
+    }
+  }
+}
+
+.card-search {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-top: 15px;
 }
 
 .card-search-input {
@@ -32,19 +50,6 @@ body {
 .card-search-footer {
   height: 15px;
   flex: 0 0 15px;
-}
-
-body > .ember-view {
-  height: 100%;
-}
-
-body > .ember-view > .ember-view {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-  margin-right: 15px;
-  margin-left: 15px;
-  margin-top: 15px;
 }
 
 #loading-img {

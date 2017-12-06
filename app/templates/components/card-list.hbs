@@ -1,9 +1,0 @@
-{{#each cards as |card|}}
-  {{card-item class="card-row" card=card}}
-{{else}}
-  {{#if performedSearch}}
-    <div class="cardlist-message">
-      Nothing found for "{{performedSearch}}".
-    </div>
-  {{/if}}
-{{/each}}
