@@ -19,6 +19,8 @@ const exampleCards = [
   'Cryptic Command',
   'Mana Leak',
   'Black Lotus',
+  'Blighted Agent',
+  'Whip of Erebus',
   'Ensnaring Bridge',
 ];
 
@@ -85,4 +87,5 @@ export default Component.extend({
       this.performSearch();
     }
   },
+
 });

@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { get, set } from '@ember/object';
 import { isBlank } from '@ember/utils';
 import { inject as service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 
 export default Component.extend({
   store:                 service(),

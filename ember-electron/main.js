@@ -116,7 +116,7 @@ const createWindow = () => {
     mainWindow = null;
   });
 
-  if (process.argv.includes('--debug')) {
+  if (process.env.EMBER_ENV === 'development' && process.env.DEBUG === '1') {
     mainWindow.webContents.openDevTools();
   }
 };
@@ -188,8 +188,6 @@ app.on('ready', () => {
       mainWindow.webContents.send('focus-search');
     }
   });
-
-  mainWindow.webContents.openDevTools();
 });
 
 // Quit when all windows are closed.
