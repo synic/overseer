@@ -4,7 +4,6 @@ const {
   BrowserWindow,
   globalShortcut,
   Menu,
-  MenuItem,
   protocol,
   Tray
 } = require('electron');
