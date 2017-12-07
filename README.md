@@ -1,51 +1,28 @@
-# overseer
+# overseer-test
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+> MTG Card Search
 
-## Prerequisites
+#### Build Setup
 
-You will need the following things properly installed on your computer.
+``` bash
+# install dependencies
+npm install
 
-* [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with NPM)
-* [Ember CLI](https://ember-cli.com/)
-* [Google Chrome](https://google.com/chrome/)
+# serve with hot reload at localhost:9080
+npm run dev
 
-## Installation
+# build electron application for production
+npm run build
 
-* `git clone <repository-url>` this repository
-* `cd overseer`
-* `npm install`
+# run unit & end-to-end tests
+npm test
 
-## Running / Development
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-* Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
+# lint all JS/Vue component files in `src/`
+npm run lint
 
-### Code Generators
+```
 
-Make use of the many generators for code, try `ember help generate` for more details
+---
 
-### Running Tests
-
-* `ember test`
-* `ember test --server`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](https://emberjs.com/)
-* [ember-cli](https://ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[1c165f7](https://github.com/SimulatedGREG/electron-vue/tree/1c165f7c5e56edaf48be0fbb70838a1af26bb015) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
