@@ -18,6 +18,7 @@
   export default {
     name: 'card-list',
     components: { CardRow },
+
     computed: {
       notFoundText() {
         if (!this.loading && this.lastQuery && this.cards.length === 0) {
@@ -31,6 +32,7 @@
         lastQuery: state => state.Cards.lastQuery,
       }),
     },
+
     watch: {
       cards() {
         this.$refs.cardlist.scrollTop = 0;

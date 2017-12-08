@@ -47,6 +47,7 @@
   export default {
     name: 'card-search',
     components: { CardList },
+
     computed: {
       placeholderText() {
         const item = exampleCards[
@@ -58,12 +59,14 @@
         loading: state => state.Cards.loading,
       }),
     },
+
     methods: {
       sendApplicationCommand(command) {
         if (ipc === null) return;
         command = command.substr(1, command.length - 2);
         ipc.send(`application-cmd-${command}`);
       },
+
       search(event) {
         const value = event.target.value;
         if (value.startsWith(':') && value.endsWith(':')) {
@@ -75,11 +78,13 @@
           });
         }
       },
+
       focusInput() {
         this.$refs.search.focus();
         this.$refs.search.select();
       },
     },
+
     mounted() {
       this.focusInput();
     },

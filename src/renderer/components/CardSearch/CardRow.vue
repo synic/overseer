@@ -49,6 +49,7 @@
   export default {
     name: 'card-row',
     props: ['card'],
+
     filters: {
       mtg(text, wh) {
         if (!text) return '';
@@ -62,6 +63,7 @@
 
         return t;
       },
+
       legalities(cardLegalities) {
         const legalities = [];
         cardLegalities.forEach((legality) => {
@@ -77,6 +79,7 @@
         return legalities.join(', ');
       },
     },
+
     mounted() {
       const image = this.$refs.image;
       image.onload = () => {
@@ -187,4 +190,3 @@
     box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 1);
   }
 </style>
-
