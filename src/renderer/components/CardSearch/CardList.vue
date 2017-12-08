@@ -51,8 +51,6 @@
     border-radius: 4px;
     padding-top: 15px;
     padding-bottom: 15px;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.75),
-      0 0 8px rgba(102, 175, 233, 0);
     margin-bottom: 15px;
 
     &::-webkit-scrollbar {
