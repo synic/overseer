@@ -12,21 +12,23 @@
 
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css?family=Raleway:400,400i');
+  @import '~@/style/variables.scss';
+
   html, body {
     height: 100%;
     width: 100%;
-    background-color: #666a73;
-    font-family: 'Raleway', sans-serif;
-    /* -webkit-app-region: drag; */
+    background-color: $page-bg-color;
+    font-family: $page-font-family;
+    font-size: 16px;
+    -webkit-app-region: drag;
   }
 
   body {
     overflow: hidden;
 
     /* disable text selection so it doesn't seem like a web app */
-    /* -webkit-user-select: none; */
-    border: 1px solid #444;
-    border-radius: 4px;
+    -webkit-user-select: none;
+    border: 1px solid $color1;
     height: 100%;
   }
 
@@ -37,8 +39,8 @@
   }
 
   ::selection {
-    background-color: #aaa;
-    color: #000;
+    background-color: $color5;
+    color: black;
   }
 
   textarea, input, button { outline: none; }

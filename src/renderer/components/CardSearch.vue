@@ -92,33 +92,32 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '~@/style/variables.scss';
 
   .card-search {
     height: 100%;
     display: flex;
     flex-flow: column;
-    margin: 15px 15px 0 15px;
+    margin: 1% 1% 0 1%;
   }
 
   .card-search-input {
-    margin-bottom: 15px;
+    margin-bottom: 1%;
     display: block;
     flex: 0 0 auto;
 
     #search-txt {
       -webkit-app-region: no-drag;
-      background-color: #d9d1c7;
+      background-color: $color4;
       border: none;
       border-radius: 4px;
-      color: #000;
+      color: black;
       width: 100%;
       position: relative;
       float: left;
       height: 37px;
-      padding: 6px;
-      font-size: 20px;
-      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075),
-        0 0 8px rgba(102, 175, 233, 0);
+      padding: 1%;
+      font-size: 1.2em;
     }
 
     #loading-img {

@@ -42,18 +42,19 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '~@/style/variables.scss';
+
   .cardlist {
-    background-color: #d9d1c7;
+    background-color: $color4;
     overflow-y: scroll;
     flex: 1 1 auto;
     border: none;
-    font-size: 14px;
+    font-size: .8em;
     -webkit-app-region: no-drag;
     font-weight: 400;
     border-radius: 4px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+    padding: 1% 0 1% 0;
+    margin-bottom: 1%;
 
     &::-webkit-scrollbar {
       width: 5px !important;
@@ -62,9 +63,9 @@
 
   .cardlist-message {
     width: 100%;
-    font-size: 24px;
+    font-size: 1.8empx;
     text-align: center;
-    margin: 15px 15px 0 15px;
+    margin: 1% 1% 0 1%;
   }
 
 </style>

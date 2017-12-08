@@ -91,14 +91,16 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '~@/style/variables.scss';
+
   .card-row {
-    background-color: #f2ede4;
+    background-color: $color3;
     display: flex;
     color: #000;
     flex-direction: row;
-    padding: 6px;
+    padding: 1%;
     border-radius: 4px;
-    margin: 0 10px 15px 10px;
+    margin: 0 .8% 1% .8%;
   }
 
   .card-text {
@@ -107,7 +109,7 @@
 
   .card-flavor {
     font-style: italic;
-    margin-top: 15px;
+    margin-top: 1%;
     flex: 0 0 auto;
   }
 
@@ -117,7 +119,6 @@
     border-radius: 4px;
     vertical-align: middle;
     flex: 0 0 auto;
-    margin: 6px;
     background-image: url('/static/images/example_card.jpg');
     background-position: left top;
     background-size: 100%;
@@ -139,9 +140,10 @@
   .card-name-separator {
     border: none;
     height: 1px;
-    background-color: #ccc;
+    background-color: $color5;
     flex: 0 0 auto;
     width: 100%;
+    margin: .5% 0 .5% 0;
   }
 
   .card-header {
@@ -151,7 +153,7 @@
 
   .card-type {
     flex: 0 0 auto;
-    margin-bottom: 15px;
+    margin-bottom: 1%;
   }
 
   .card-extra {
@@ -160,13 +162,13 @@
 
   .card-legality {
     flex: 0 0 auto;
-    margin-top: 15px;
+    margin-top: 1%;
   }
 
   .card-name {
     font-size: 20px;
     flex: 1 0 auto;
-    color: #000;
+    color: black;
   }
 
   .card-mana-cost {
@@ -174,9 +176,15 @@
     text-align: right;
   }
 
+  .mana-img {
+    border: 1px solid $color1;
+    border-radius: 100%;
+    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 1);
+  }
+
   .card-information {
     flex: 1 1 auto;
-    padding: 15px 6px 25px 6px;
+    padding: 0 .5% 0% 1%;
     border-radius: 4px;
     display: flex;
     flex-direction: column;
@@ -184,8 +192,10 @@
 
 </style>
 <style lang="scss">
+  @import '~@/style/variables.scss';
+
   .mana-img {
-    border: 1px solid #666;
+    border: 1px solid $color1;
     border-radius: 100%;
     box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 1);
   }
