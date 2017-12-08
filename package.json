@@ -1,6 +1,6 @@
 {
-  "name": "overseer-test",
-  "productName": "overseer-test",
+  "name": "overseer",
+  "productName": "overseer",
   "version": "0.0.0",
   "author": "Adam Olsen <arolsen@gmail.com>",
   "description": "MTG Card Search",

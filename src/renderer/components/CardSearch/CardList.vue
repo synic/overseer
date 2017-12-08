@@ -20,10 +20,8 @@
     components: { CardRow },
     computed: {
       notFoundText() {
-        if (!this.$store.state.Cards.loading &&
-            this.$store.state.Cards.lastQuery &&
-            this.$store.state.Cards.cards.length === 0) {
-          return this.$store.state.Cards.lastQuery;
+        if (!this.loading && this.lastQuery && this.cards.length === 0) {
+          return this.lastQuery;
         }
         return null;
       },
