@@ -26,6 +26,7 @@
         }
         return null;
       },
+      
       ...mapState({
         loading: state => state.Cards.loading,
         cards: state => state.Cards.cards,
