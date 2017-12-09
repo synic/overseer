@@ -1,44 +1,42 @@
 <template>
-  <div class="card-row">
-    <div class="card-image-container">
-      <input type="hidden" :value="card.imageUrl" class="card-image-url">
-      <img src="static/images/example_card.jpg"
-           onerror="this.src='static/images/example_card.jpg';"
-           ref="image"
-           class="card-image"
-           width="200"
-           height="279"
-          >
+  <div class="row">
+    <div class="image-container">
+      <img
+        src="static/images/example_card.jpg"
+        onerror="this.src='static/images/example_card.jpg';"
+        ref="image"
+        width="200"
+        height="279"
+        >
     </div>
-    <div class="card-information">
-      <div class="card-header">
-        <div class="card-name">
+
+    <div class="information">
+      <div class="header">
+        <div class="name">
           {{ card.name }}
         </div>
-        <div
-          class="card-mana-cost"
-          v-html="$options.filters.mtg( card.manaCost, 17 )">
-        </div>
+
+        <div class="mana-cost" v-html="mtg( card.manaCost, 17 )"></div>
       </div>
-      <hr class="card-name-separator">
-      <div class="card-type">
+
+      <hr>
+
+      <div class="type">
         {{ card.type }}
         <span v-if="card.power">
           {{ card.power }} / {{ card.toughness }}
         </span>
       </div>
-      <div
-        class="card-text"
-        v-html="$options.filters.mtg( card.text, 14 )">
-      </div>
-      <div
-        class="card-flavor"
-        v-html="$options.filters.mtg( card.flavor, 14 )">
-      </div>
-      <div class="card-legality">
+
+      <div class="text" v-html="mtg( card.text, 14 )"></div>
+
+      <div class="flavor" v-html="mtg( card.flavor, 14 )"></div>
+
+      <div class="legality">
         Legal in: {{ card.legalities | legalities }}
       </div>
-      <div class="card-extra">
+
+      <div class="extra">
         {{ card.setName }} ({{ card.set }}), {{ card.rarity }}
       </div>
     </div>
@@ -51,19 +49,6 @@
     props: ['card'],
 
     filters: {
-      mtg(text, wh) {
-        if (!text) return '';
-        let t = text.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br>$2');
-
-        t = t.replace(/\{([0-9A-Z]\/?[0-9A-Z]?)\}/g, (all, g1) => {
-          const imageName = g1.toLowerCase().replace('/', '');
-          return `<img src="static/images/mana/mana-${imageName}.svg"
-            width="${wh}" height="${wh}" class="mana-img">`;
-        });
-
-        return t;
-      },
-
       legalities(cardLegalities) {
         const legalities = [];
         cardLegalities.forEach((legality) => {
@@ -80,10 +65,30 @@
       },
     },
 
+    methods: {
+      mtg(text, wh) {
+        if (!text) return '';
+        let t = text.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br>$2');
+        const scopeId = this.$options._scopeId; // eslint-disable-line no-underscore-dangle
+
+        t = t.replace(/\{([0-9A-Z]\/?[0-9A-Z]?)\}/g, (all, g1) => {
+          const imageName = g1.toLowerCase().replace('/', '');
+          return `<img
+                    ${scopeId}
+                    src="static/images/mana/mana-${imageName}.svg"
+                    width="${wh}"
+                    height="${wh}"
+                    class="mana-image">`;
+        });
+
+        return t;
+      },
+    },
+
     mounted() {
       const image = this.$refs.image;
       image.onload = () => {
-        image.className += ' card-image-loaded';
+        image.className += ' loaded';
       };
       image.src = this.card.imageUrl;
     },
@@ -93,7 +98,7 @@
 <style lang="scss" scoped>
   @import '~@/style/variables.scss';
 
-  .card-row {
+  .row {
     background-color: $color3;
     display: flex;
     color: #000;
@@ -101,102 +106,92 @@
     padding: 1%;
     border-radius: 4px;
     margin: 0 .8% 1% .8%;
-  }
 
-  .card-text {
-    flex: 1 1 auto;
-  }
+    .image-container {
+      width: 200px;
+      height: 279px;
+      border-radius: 4px;
+      vertical-align: middle;
+      flex: 0 0 auto;
+      background-image: url("~/static/images/example_card.jpg");
+      background-position: left top;
+      background-size: 100%;
+      background-repeat: no-repeat;
 
-  .card-flavor {
-    font-style: italic;
-    margin-top: 1%;
-    flex: 0 0 auto;
-  }
+      img {
+        vertical-align: middle;
+        opacity: 0;
+        overflow: hidden;
+        border-radius: 4px;
+        transition: opacity 0.5s;
 
-  .card-image-container {
-    width: 200px;
-    height: 279px;
-    border-radius: 4px;
-    vertical-align: middle;
-    flex: 0 0 auto;
-    background-image: url('/static/images/example_card.jpg');
-    background-position: left top;
-    background-size: 100%;
-    background-repeat: no-repeat;
-  }
-
-  .card-image {
-    vertical-align: middle;
-    opacity: 0;
-    overflow: hidden;
-    border-radius: 4px;
-    transition: opacity 0.5s;
-
-    &.card-image-loaded {
-      opacity: 1 !important;
+        &.loaded {
+          opacity: 1 !important;
+        }
+      }
     }
-  }
 
-  .card-name-separator {
-    border: none;
-    height: 1px;
-    background-color: $color5;
-    flex: 0 0 auto;
-    width: 100%;
-    margin: .5% 0 .5% 0;
-  }
+    .information {
+      flex: 1 1 auto;
+      padding: 0 .5% 0% 1%;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
 
-  .card-header {
-    display: flex;
-    flex: 0 0 auto;
-  }
+      .header {
+        display: flex;
+        flex: 0 0 auto;
+      }
 
-  .card-type {
-    flex: 0 0 auto;
-    margin-bottom: 1%;
-  }
+      .name {
+        font-size: 20px;
+        flex: 1 0 auto;
+        color: black;
+      }
 
-  .card-extra {
-    flex: 0 0 auto;
-  }
+      .mana-cost {
+        flex: 1 0 auto;
+        text-align: right;
+      }
 
-  .card-legality {
-    flex: 0 0 auto;
-    margin-top: 1%;
-  }
+      > hr {
+        border: none;
+        height: 1px;
+        background-color: $color5;
+        flex: 0 0 auto;
+        width: 100%;
+        margin: .5% 0 .5% 0;
+      }
 
-  .card-name {
-    font-size: 20px;
-    flex: 1 0 auto;
-    color: black;
-  }
+      .text {
+        flex: 1 1 auto;
+      }
 
-  .card-mana-cost {
-    flex: 1 0 auto;
-    text-align: right;
-  }
+      .flavor {
+        font-style: italic;
+        margin-top: 1%;
+        flex: 0 0 auto;
+      }
 
-  .mana-img {
-    border: 1px solid $color1;
-    border-radius: 100%;
-    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 1);
-  }
+      .type {
+        flex: 0 0 auto;
+        margin-bottom: 1%;
+      }
 
-  .card-information {
-    flex: 1 1 auto;
-    padding: 0 .5% 0% 1%;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-  }
+      .extra {
+        flex: 0 0 auto;
+      }
 
-</style>
-<style lang="scss">
-  @import '~@/style/variables.scss';
+      .legality {
+        flex: 0 0 auto;
+        margin-top: 1%;
+      }
+    }
 
-  .mana-img {
-    border: 1px solid $color1;
-    border-radius: 100%;
-    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 1);
+    img.mana-image {
+      border: 1px solid $color1;
+      border-radius: 100%;
+      box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 1);
+    }
   }
 </style>

@@ -1,13 +1,15 @@
 <template>
-  <div class="cardlist" ref="cardlist">
-    <div v-if="notFoundText" class="cardlist-message">
-      Nothing found for "{{ notFoundText }}".
+  <div class="list" ref="list">
+    <div v-if="isSearchEmpty" class="message">
+      Nothing found for "{{ lastQuery }}".
     </div>
     <card-row
       v-else
       v-for="card in cards"
       :key="card.id"
-      :card="card" />
+      :card="card"
+      >
+    </card-row>
   </div>
 </template>
 
@@ -20,13 +22,13 @@
     components: { CardRow },
 
     computed: {
-      notFoundText() {
+      isSearchEmpty() {
         if (!this.loading && this.lastQuery && this.cards.length === 0) {
-          return this.lastQuery;
+          return true;
         }
-        return null;
+        return false;
       },
-      
+
       ...mapState({
         loading: state => state.Cards.loading,
         cards: state => state.Cards.cards,
@@ -36,7 +38,7 @@
 
     watch: {
       cards() {
-        this.$refs.cardlist.scrollTop = 0;
+        this.$refs.list.scrollTop = 0;
       },
     },
   };
@@ -45,7 +47,7 @@
 <style lang="scss" scoped>
   @import '~@/style/variables.scss';
 
-  .cardlist {
+  .list {
     background-color: $color4;
     overflow-y: scroll;
     flex: 1 1 auto;
@@ -57,16 +59,16 @@
     padding: 1% 0 1% 0;
     margin-bottom: 1%;
 
+    .message {
+      width: 100%;
+      font-size: 1.8em;
+      text-align: center;
+      margin: 1% 1% 0 1%;
+    }
+
     &::-webkit-scrollbar {
       width: 5px !important;
     }
-  }
-
-  .cardlist-message {
-    width: 100%;
-    font-size: 1.8empx;
-    text-align: center;
-    margin: 1% 1% 0 1%;
   }
 
 </style>

@@ -39,11 +39,13 @@
   }
 
   ::selection {
-    background-color: $color5;
+    background-color: #999;
     color: black;
   }
 
-  textarea, input, button { outline: none; }
+  textarea, input, button {
+    outline: none;
+  }
 
   #app {
     height: 100%;

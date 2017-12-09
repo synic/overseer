@@ -1,21 +1,19 @@
 <template>
-  <div class="card-search" @click="focusInput">
-    <div class="card-search-input">
-      <input
-        id="search-txt"
-        ref="search"
+  <div class="content" @click="focusInput">
+    <div class="input-container">
+      <input ref="search"
         :placeholder="placeholderText"
         @keydown.esc="sendApplicationCommand(':hide:');"
         @keyup.enter="search"
-      >
+        >
       <img
         src="static/images/loading.gif"
-        id="loading-img"
-        v-if="loading">
+        v-show="loading"
+        >
     </div>
 
-    <card-list />
-    <div class="card-search-footer" />
+    <card-list></card-list>
+    <div class="footer"></div>
   </div>
 </template>
 
@@ -69,13 +67,11 @@
 
       search(event) {
         const value = event.target.value;
+        this.focusInput();
         if (value.startsWith(':') && value.endsWith(':')) {
           this.sendApplicationCommand(value);
-          this.focusInput();
         } else {
-          this.$store.dispatch('performSearch', value).then(() => {
-            this.focusInput();
-          });
+          this.$store.dispatch('performSearch', value);
         }
       },
 
@@ -94,41 +90,41 @@
 <style lang="scss" scoped>
   @import '~@/style/variables.scss';
 
-  .card-search {
+  .content {
     height: 100%;
     display: flex;
     flex-flow: column;
     margin: 1% 1% 0 1%;
+
+    .input-container {
+      margin-bottom: 1%;
+      display: block;
+      flex: 0 0 auto;
+
+      input {
+        -webkit-app-region: no-drag;
+        background-color: $color4;
+        border: none;
+        border-radius: 4px;
+        color: black;
+        width: 100%;
+        position: relative;
+        float: left;
+        height: 37px;
+        padding: 1%;
+        font-size: 1.2em;
+      }
+
+      img {
+        position: absolute;
+        right: 20px;
+        width: 34px;
+        height: 34px;
+      }
+    }
   }
 
-  .card-search-input {
-    margin-bottom: 1%;
-    display: block;
-    flex: 0 0 auto;
-
-    #search-txt {
-      -webkit-app-region: no-drag;
-      background-color: $color4;
-      border: none;
-      border-radius: 4px;
-      color: black;
-      width: 100%;
-      position: relative;
-      float: left;
-      height: 37px;
-      padding: 1%;
-      font-size: 1.2em;
-    }
-
-    #loading-img {
-      position: absolute;
-      right: 20px;
-      width: 34px;
-      height: 34px;
-    }
-  }
-
-  .card-search-footer {
+  .footer {
     height: 15px;
     flex: 0 0 15px;
   }
