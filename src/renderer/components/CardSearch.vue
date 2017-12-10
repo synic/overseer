@@ -7,7 +7,7 @@
         @keyup.enter="search"
         >
       <img
-        src="static/images/loading.gif"
+        src="~@/assets/images/loading.gif"
         v-show="loading"
         >
     </div>

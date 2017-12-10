@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="image-container">
+    <div class="image-container" ref="imgContainer">
       <img
-        src="static/images/example_card.jpg"
-        onerror="this.src='static/images/example_card.jpg';"
+        src="~@/assets/images/example_card.jpg"
+        :onerror="'this.src=\'' + exampleCardUrl + '\';'"
         ref="image"
         width="200"
         height="279"
@@ -65,6 +65,12 @@
       },
     },
 
+    data() {
+      return {
+        exampleCardUrl: require('@/assets/images/example_card.jpg'),
+      };
+    },
+
     methods: {
       mtg(text, wh) {
         if (!text) return '';
@@ -73,12 +79,11 @@
 
         t = t.replace(/\{([0-9A-Z]\/?[0-9A-Z]?)\}/g, (all, g1) => {
           const imageName = g1.toLowerCase().replace('/', '');
-          return `<img
-                    ${scopeId}
-                    src="static/images/mana/mana-${imageName}.svg"
-                    width="${wh}"
-                    height="${wh}"
-                    class="mana-image">`;
+          const img = require( // eslint-disable-line import/no-dynamic-require
+            `@/assets/images/mana/mana-${imageName}.svg`);
+
+          return `<img ${scopeId} src="${img}" width="${wh}"
+                    height="${wh}" class="mana-image">`;
         });
 
         return t;
@@ -87,6 +92,7 @@
 
     mounted() {
       const image = this.$refs.image;
+
       image.onload = () => {
         image.className += ' loaded';
       };
@@ -113,7 +119,7 @@
       border-radius: 4px;
       vertical-align: middle;
       flex: 0 0 auto;
-      background-image: url("~/static/images/example_card.jpg");
+      background: url(~@/assets/images/example_card.jpg);
       background-position: left top;
       background-size: 100%;
       background-repeat: no-repeat;
