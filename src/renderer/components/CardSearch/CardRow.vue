@@ -50,6 +50,9 @@
 
     filters: {
       legalities(cardLegalities) {
+        if (cardLegalities === undefined) {
+          return 'All';
+        }
         const legalities = [];
         cardLegalities.forEach((legality) => {
           if (legality.legality !== 'Banned') {
