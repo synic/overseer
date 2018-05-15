@@ -3,8 +3,8 @@
     <div class="input-container">
       <input ref="search"
         :placeholder="placeholderText"
-        @keydown.esc="sendApplicationCommand(':hide:');"
-        @keyup.enter="search"
+        @keydown.esc.prevent="sendApplicationCommand(':hide:');"
+        @keyup.enter.prevent="search"
         >
       <img
         src="~@/assets/images/loading.gif"
