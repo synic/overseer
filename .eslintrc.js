@@ -18,7 +18,6 @@ module.exports = {
   'rules': {
     'global-require': 0,
     'import/no-unresolved': 0,
-    'import/no-extraneous-dependencies': 0,
     'no-param-reassign': 0,
     'no-shadow': 0,
     'import/extensions': 0,

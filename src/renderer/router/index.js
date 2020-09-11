@@ -8,7 +8,7 @@ export default new Router({
     {
       path: '/',
       name: 'card-search',
-      component: require('@/components/CardSearch').default,
+      component: require('@/components/card-search/card-search').default,
     },
     {
       path: '*',

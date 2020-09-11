@@ -21,13 +21,14 @@ const mutations = {
 const actions = {
   performSearch({ commit }, query) {
     commit('SET_LOADING', true);
+    commit('SET_CARDS', []);
     return new Promise((resolve) => {
       mtg.card.where({
         name: query,
         contains: 'imageUrl',
       }).then((cards) => {
-        console.log( // eslint-disable-line no-console
-          `Found ${cards.length} cards...`);
+        // eslint-disable-next-line no-console
+        console.log(`Found ${cards.length} cards...`);
 
         commit('SET_CARDS', cards);
         commit('SET_LOADING', false);

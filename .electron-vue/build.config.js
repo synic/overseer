@@ -11,7 +11,7 @@ module.exports = {
   icon: path.join(__dirname, '../static/icons/icon'),
   ignore: /(^\/(src|test|\.[a-z]+|README|yarn|static|dist\/web))|\.gitkeep/,
   out: path.join(__dirname, '../build'),
-  extendInfo: path.join(__dirname, '../static/mac/info.plist'),
   overwrite: true,
+  extendInfo: path.join(__dirname, '../static/mac/info.plist'),
   platform: process.env.BUILD_TARGET || 'all',
 };

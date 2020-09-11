@@ -3,6 +3,9 @@
     <div v-if="isSearchEmpty" class="message">
       Nothing found for "{{ lastQuery }}".
     </div>
+    <div v-if="loading" class="message">
+      Loading...
+    </div>
     <card-row
       v-else
       v-for="card in cards"
@@ -15,7 +18,7 @@
 
 <script>
   import { mapState } from 'vuex';
-  import CardRow from './CardRow';
+  import CardRow from './card-row';
 
   export default {
     name: 'card-list',
@@ -30,9 +33,9 @@
       },
 
       ...mapState({
-        loading: state => state.Cards.loading,
-        cards: state => state.Cards.cards,
-        lastQuery: state => state.Cards.lastQuery,
+        loading: state => state.cards.loading,
+        cards: state => state.cards.cards,
+        lastQuery: state => state.cards.lastQuery,
       }),
     },
 

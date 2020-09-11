@@ -56,7 +56,7 @@
         const legalities = [];
         cardLegalities.forEach((legality) => {
           if (legality.legality !== 'Banned') {
-            let format = legality.format;
+            let { format } = legality.format;
             if (legality.legality === 'Restricted') {
               format += ' (Restricted)';
             }
@@ -82,8 +82,8 @@
 
         t = t.replace(/\{([0-9A-Z]\/?[0-9A-Z]?)\}/g, (all, g1) => {
           const imageName = g1.toLowerCase().replace('/', '');
-          const img = require( // eslint-disable-line import/no-dynamic-require
-            `@/assets/images/mana/mana-${imageName}.svg`);
+          // eslint-disable-next-line import/no-dynamic-require
+          const img = require(`@/assets/images/mana/mana-${imageName}.svg`);
 
           return `<img ${scopeId} src="${img}" width="${wh}"
                     height="${wh}" class="mana-image">`;
@@ -94,12 +94,15 @@
     },
 
     mounted() {
-      const image = this.$refs.image;
+      const { image } = this.$refs;
 
       image.onload = () => {
         image.className += ' loaded';
       };
-      image.src = this.card.imageUrl;
+
+      if (this.card.imageUrl) {
+        image.src = this.card.imageUrl;
+      }
     },
   };
 </script>

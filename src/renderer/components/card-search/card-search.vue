@@ -19,8 +19,8 @@
 
 <script>
   import { mapState } from 'vuex';
-  import CardList from './CardSearch/CardList';
-  const ipc = require('electron').ipcRenderer;
+  import CardList from './card-list';
+  const { ipcRenderer: ipc } = require('electron');
 
   const exampleCards = [
     'Lifecrafter\'s Bestiary',
@@ -54,7 +54,7 @@
       },
 
       ...mapState({
-        loading: state => state.Cards.loading,
+        loading: state => state.cards.loading,
       }),
     },
 
@@ -66,7 +66,7 @@
       },
 
       search(event) {
-        const value = event.target.value;
+        const { value } = event.target;
         this.focusInput();
         if (value.startsWith(':') && value.endsWith(':')) {
           this.sendApplicationCommand(value);

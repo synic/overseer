@@ -1,5 +1,4 @@
-/* eslint-env node */
-/* eslint no-console: "error" */
+import '../renderer/store';
 const {
   app,
   BrowserWindow,
@@ -24,14 +23,14 @@ const WINDOW_HEIGHT = 600;
 const WINDOW_WIDTH = 800;
 const IMAGE_FOLDER = `${__static}/icons`;
 
-let mainWindow = null;
+let mainWindow;
 let tray = null;
 const winURL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:9080'
   : `file://${__dirname}/index.html`;
 
 function createWindow() {
-  const bounds = electron.screen.getPrimaryDisplay().bounds;
+  const { bounds } = electron.screen.getPrimaryDisplay();
   const xCoord = bounds.x + ((bounds.width - WINDOW_WIDTH) / 2);
   const yCoord = bounds.y + ((bounds.height - WINDOW_HEIGHT) / 2);
 
@@ -40,7 +39,6 @@ function createWindow() {
     defaultHeight: WINDOW_HEIGHT,
   });
 
-  // Create the browser window.
   mainWindow = new BrowserWindow({
     parent: process.platform !== 'darwin' ? new BrowserWindow({ show: false }) : null,
     modal: true,
@@ -63,37 +61,31 @@ function createWindow() {
     icon: `${IMAGE_FOLDER}/icon.png`,
   });
 
-  // load the application page
   mainWindow.loadURL(winURL);
-
-  // manage window state (width, height, x, y)
   mainWindowState.manage(mainWindow);
 
-  // If a loading operation goes wrong, we'll send Electron back to
-  // Ember App entry point
   mainWindow.webContents.on('did-fail-load', () => {
     mainWindow.loadURL(winURL);
   });
 
   mainWindow.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
     if (mainWindow.parent) {
       mainWindow.parent.close();
     }
     mainWindow = null;
   });
-
-  if (process.env.EMBER_ENV === 'development' && process.env.DEBUG === '1') {
-    mainWindow.webContents.openDevTools();
-  }
+  mainWindow.show();
 }
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
 
 app.on('ready', () => {
   createWindow();
 
-  // create the system tray icon
   let trayImage = `${IMAGE_FOLDER}/tray/iconTemplate.png`;
 
   if (process.platform === 'win32') {
@@ -135,9 +127,10 @@ app.on('ready', () => {
       mainWindow.show();
       mainWindow.focus();
 
-      // tell the main window to focus and select text in the search box
       mainWindow.webContents.send('focus-search');
     }
+    const position = mainWindow.getPosition();
+    mainWindow.setPosition(position[0], position[1]);
   });
 });
 
@@ -152,8 +145,6 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-// IPC Handlers
 
 ipc.on('application-cmd-exit', () => {
   app.quit();
