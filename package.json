@@ -27,7 +27,7 @@
   "dependencies": {
     "vue": "^2.5.16",
     "axios": "^0.18.0",
-    "electron": "^2.0.4",
+    "electron": "^9.4.0",
     "electron-window-state": "^5.0.3",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
